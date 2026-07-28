@@ -1,72 +1,95 @@
 // =========================================
-// AVEVA TXT Templates
-// Author : CHUONG + ChatGPT
+// AVEVA Equipment Studio
+// Template Database
 // =========================================
 
-const Templates = {
 
-    EXTRUSION: `NEW EQUIPMENT /{NAME}
+// Template variables:
+//
+// {{NAME}}
+// {{PROFILE}}
+// {{LENGTH}}
+// {{WIDTH}}
+// {{HEIGHT}}
+// {{RADIUS}}
+// {{POS_E}}
+// {{POS_N}}
+// {{POS_U}}
+// {{ORI}}
+
+
+// =========================================
+// Equipment Templates
+// =========================================
+
+
+const AVEVA_TEMPLATES = {
+
+
+    // -------------------------------------
+    // New Extrusion Equipment
+    // -------------------------------------
+
+    EXTRUSION:
+
+
+`NEW EQUIPMENT /{{NAME}}
+
 
 NEW EXTRUSION /BODY
 
-PROFILE /{PROFILE}
 
-LENGTH {LENGTH}
-
-WIDTH {WIDTH}
-
-HEIGHT {HEIGHT}
-
-RADIUS {RADIUS}
-
-POS E {E} N {N} U {U}
-
-ORI {ORI}`,
+PROFILE /{{PROFILE}}
 
 
-
-    BOX: `NEW EQUIPMENT /{NAME}
-
-NEW BOX /BODY
-
-XLEN {LENGTH}
-
-YLEN {WIDTH}
-
-ZLEN {HEIGHT}
-
-POS E {E} N {N} U {U}
-
-ORI {ORI}`,
+LENGTH {{LENGTH}}
 
 
-
-    CYLI: `NEW EQUIPMENT /{NAME}
-
-NEW CYLI /BODY
-
-DIAM {WIDTH}
-
-HEIG {HEIGHT}
-
-POS E {E} N {N} U {U}
-
-ORI {ORI}`,
+WIDTH {{WIDTH}}
 
 
+HEIGHT {{HEIGHT}}
 
-    CONE: `NEW EQUIPMENT /{NAME}
 
-NEW CONE /BODY
+RADIUS {{RADIUS}}
 
-DBOT {WIDTH}
 
-DTOP {RADIUS}
+POS E {{POS_E}} N {{POS_N}} U {{POS_U}}
 
-HEIG {HEIGHT}
 
-POS E {E} N {N} U {U}
+ORI {{ORI}}`
 
-ORI {ORI}`
 
 };
+
+
+
+// =========================================
+// Get Template
+// =========================================
+
+
+function getTemplate(type){
+
+
+    if(AVEVA_TEMPLATES[type]){
+
+
+        return AVEVA_TEMPLATES[type];
+
+
+    }
+
+
+    console.error(
+
+        "Template not found:",
+
+        type
+
+    );
+
+
+    return "";
+
+}
