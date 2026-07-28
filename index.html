@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AVEVA TXT Generator</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>AVEVA EQUIPMENT TXT GENERATOR</h1>
+
+<div class="card">
+
+<h2>Equipment</h2>
+
+<label>Equipment Name</label>
+<input id="eqName" value="EQ001">
+
+<label>Primitive</label>
+
+<select id="primitive">
+
+<option>EXTRUSION</option>
+
+</select>
+
+<label>Profile</label>
+
+<select id="profile">
+
+<option>ROUNDRECT</option>
+
+<option>RECTANGLE</option>
+
+<option>CIRCLE</option>
+
+</select>
+
+</div>
+
+<div class="card">
+
+<h2>Dimensions</h2>
+
+<label>Length</label>
+<input id="length" type="number" value="2000">
+
+<label>Width</label>
+<input id="width" type="number" value="1000">
+
+<label>Height</label>
+<input id="height" type="number" value="1500">
+
+<label>Corner Radius</label>
+<input id="radius" type="number" value="100">
+
+</div>
+
+<div class="card">
+
+<h2>Position</h2>
+
+<label>East (E)</label>
+<input id="posE" type="number" value="1000">
+
+<label>North (N)</label>
+<input id="posN" type="number" value="2000">
+
+<label>Up (U)</label>
+<input id="posU" type="number" value="500">
+
+</div>
+
+<div class="card">
+
+<h2>Orientation</h2>
+
+<select id="orientation">
+
+<option value="Y IS N AND Z IS U">+Y</option>
+
+<option value="Y IS S AND Z IS U">-Y</option>
+
+<option value="X IS E AND Z IS U">+X</option>
+
+<option value="X IS W AND Z IS U">-X</option>
+
+<option value="Z IS U AND Y IS N">+Z</option>
+
+<option value="Z IS D AND Y IS N">-Z</option>
+
+</select>
+
+</div>
+
+<div class="card">
+
+<h2>Voice</h2>
+
+<button id="voiceBtn">
+
+🎤 Start Voice
+
+</button>
+
+<p id="voiceResult"></p>
+
+</div>
+
+<div class="card">
+
+<h2>Preview</h2>
+
+<pre id="preview"></pre>
+
+</div>
+
+<div class="buttons">
+
+<button id="generateBtn">
+
+Generate TXT
+
+</button>
+
+<button id="downloadBtn">
+
+Download TXT
+
+</button>
+
+</div>
+
+</div>
+
+<script src="templates.js"></script>
+
+<script src="generator.js"></script>
+
+<script src="speech.js"></script>
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
