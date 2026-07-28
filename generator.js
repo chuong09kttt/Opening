@@ -1,161 +1,297 @@
-// =====================================
-// AVEVA TXT Generator
-// =====================================
+// =========================================
+// AVEVA Equipment Studio
+// TXT Generator Engine
+// =========================================
 
-let generatedText = "";
 
-//--------------------------------------
-// Đọc dữ liệu từ Form
-//--------------------------------------
 
-function getFormData() {
+let currentTXT = "";
+
+
+
+// =========================================
+// Read User Input
+// =========================================
+
+function getEquipmentData(){
+
 
     return {
 
-        name: document.getElementById("eqName").value.trim(),
 
-        primitive: document.getElementById("primitive").value,
+        NAME:
 
-        profile: document.getElementById("profile").value,
+        document
+        .getElementById("eqName")
+        .value
+        .trim(),
 
-        length: document.getElementById("length").value,
 
-        width: document.getElementById("width").value,
 
-        height: document.getElementById("height").value,
+        PROFILE:
 
-        radius: document.getElementById("radius").value,
+        document
+        .getElementById("profile")
+        .value,
 
-        e: document.getElementById("posE").value,
 
-        n: document.getElementById("posN").value,
 
-        u: document.getElementById("posU").value,
+        LENGTH:
 
-        ori: document.getElementById("orientation").value
+        document
+        .getElementById("length")
+        .value,
+
+
+
+        WIDTH:
+
+        document
+        .getElementById("width")
+        .value,
+
+
+
+        HEIGHT:
+
+        document
+        .getElementById("height")
+        .value,
+
+
+
+        RADIUS:
+
+        document
+        .getElementById("radius")
+        .value,
+
+
+
+        POS_E:
+
+        document
+        .getElementById("posE")
+        .value,
+
+
+
+        POS_N:
+
+        document
+        .getElementById("posN")
+        .value,
+
+
+
+        POS_U:
+
+        document
+        .getElementById("posU")
+        .value,
+
+
+
+        ORI:
+
+        document
+        .getElementById("orientation")
+        .value
+
 
     };
 
-}
-
-
-
-//--------------------------------------
-// Thay thế biến trong Template
-//--------------------------------------
-
-function replaceAll(template, data) {
-
-    return template
-
-        .replaceAll("{NAME}", data.name)
-
-        .replaceAll("{PROFILE}", data.profile)
-
-        .replaceAll("{LENGTH}", data.length)
-
-        .replaceAll("{WIDTH}", data.width)
-
-        .replaceAll("{HEIGHT}", data.height)
-
-        .replaceAll("{RADIUS}", data.radius)
-
-        .replaceAll("{E}", data.e)
-
-        .replaceAll("{N}", data.n)
-
-        .replaceAll("{U}", data.u)
-
-        .replaceAll("{ORI}", data.ori);
 
 }
 
 
 
-//--------------------------------------
-// Sinh TXT
-//--------------------------------------
 
-function generateTXT() {
+// =========================================
+// Validate Data
+// =========================================
 
-    const data = getFormData();
 
-    let template = Templates[data.primitive];
+function validateEquipment(data){
 
-    if (!template) {
 
-        alert("Template not found!");
+    if(!data.NAME){
 
-        return;
+
+        alert(
+            "Equipment name is required!"
+        );
+
+
+        return false;
+
 
     }
 
-    generatedText = replaceAll(template, data);
 
-    document.getElementById("preview").textContent = generatedText;
+
+    if(!data.LENGTH ||
+       !data.WIDTH ||
+       !data.HEIGHT){
+
+
+        alert(
+            "Dimension is missing!"
+        );
+
+
+        return false;
+
+
+    }
+
+
+    return true;
+
 
 }
 
 
 
-//--------------------------------------
-// Download TXT
-//--------------------------------------
 
-function downloadTXT() {
+// =========================================
+// Replace Template Variables
+// =========================================
 
-    if (generatedText === "") {
 
-        generateTXT();
+function replaceVariables(template,data){
+
+
+    let result = template;
+
+
+
+    Object.keys(data)
+    .forEach(key=>{
+
+
+        let tag =
+        "{{"+key+"}}";
+
+
+        result =
+        result.replaceAll(
+            tag,
+            data[key]
+        );
+
+
+    });
+
+
+
+    return result;
+
+
+}
+
+
+
+
+// =========================================
+// Generate TXT
+// =========================================
+
+
+function generateTXT(){
+
+
+    let data =
+    getEquipmentData();
+
+
+
+    if(!validateEquipment(data)){
+
+
+        return "";
+
 
     }
 
-    const blob = new Blob(
 
-        [generatedText],
 
-        {
+    let template =
 
-            type: "text/plain"
-
-        }
-
+    getTemplate(
+        "EXTRUSION"
     );
 
 
 
-    const a = document.createElement("a");
+    currentTXT =
+
+    replaceVariables(
+        template,
+        data
+    );
 
 
 
-    a.href = URL.createObjectURL(blob);
+    updatePreview();
 
 
 
-    let filename = document.getElementById("eqName").value;
+    saveSettings(data);
 
 
 
-    if (filename === "") {
+    return currentTXT;
 
-        filename = "equipment";
+
+}
+
+
+
+
+
+// =========================================
+// Update Preview Window
+// =========================================
+
+
+function updatePreview(){
+
+
+    let box =
+
+    document
+    .getElementById(
+        "preview"
+    );
+
+
+
+    if(box){
+
+
+        box.textContent =
+        currentTXT;
+
 
     }
 
 
-
-    a.download = filename + ".txt";
-
-
-
-    document.body.appendChild(a);
+}
 
 
 
-    a.click();
 
 
+// =========================================
+// Get Generated Text
+// =========================================
 
-    document.body.removeChild(a);
+
+function getCurrentTXT(){
+
+
+    return currentTXT;
+
 
 }
