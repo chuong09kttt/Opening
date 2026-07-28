@@ -1,89 +1,217 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
-    <title>AVEVA TXT Generator</title>
+<title>AVEVA Equipment Studio</title>
 
-    <link rel="stylesheet" href="style.css">
+<link rel="stylesheet"
+      href="style.css">
+
+<link rel="preconnect"
+      href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
 </head>
 
 <body>
 
-<div class="container">
+<header>
 
-<h1>AVEVA EQUIPMENT TXT GENERATOR</h1>
+<div class="logo">
 
-<div class="card">
+<i class="fa-solid fa-cube"></i>
 
-<h2>Equipment</h2>
+AVEVA Equipment Studio
 
-<label>Equipment Name</label>
-<input id="eqName" value="EQ001">
+</div>
 
-<label>Primitive</label>
+<div class="status">
 
-<select id="primitive">
+<span class="green-dot"></span>
 
-<option>EXTRUSION</option>
+Ready
 
-</select>
+</div>
 
-<label>Profile</label>
+</header>
+
+<div class="main">
+
+<!-------------------------------->
+
+<div class="leftPanel">
+
+<!-------------------------------->
+
+<div class="group">
+
+<h2>
+
+<i class="fa-solid fa-box"></i>
+
+Equipment
+
+</h2>
+
+<label>
+
+Equipment Name
+
+</label>
+
+<input
+id="eqName"
+value="EQ001">
+
+<label>
+
+Profile
+
+</label>
 
 <select id="profile">
 
 <option>ROUNDRECT</option>
 
-<option>RECTANGLE</option>
-
-<option>CIRCLE</option>
-
 </select>
 
 </div>
 
-<div class="card">
+<!-------------------------------->
 
-<h2>Dimensions</h2>
+<div class="group">
 
-<label>Length</label>
-<input id="length" type="number" value="2000">
+<h2>
 
-<label>Width</label>
-<input id="width" type="number" value="1000">
+<i class="fa-solid fa-ruler-combined"></i>
 
-<label>Height</label>
-<input id="height" type="number" value="1500">
+Dimensions
 
-<label>Corner Radius</label>
-<input id="radius" type="number" value="100">
+</h2>
+
+<label>
+
+Length
+
+</label>
+
+<input
+id="length"
+type="number"
+value="2000">
+
+<label>
+
+Width
+
+</label>
+
+<input
+id="width"
+type="number"
+value="1000">
+
+<label>
+
+Height
+
+</label>
+
+<input
+id="height"
+type="number"
+value="1500">
+
+<label>
+
+Corner Radius
+
+</label>
+
+<input
+id="radius"
+type="number"
+value="100">
 
 </div>
 
-<div class="card">
+<!-------------------------------->
 
-<h2>Position</h2>
+<div class="group">
 
-<label>East (E)</label>
-<input id="posE" type="number" value="1000">
+<h2>
 
-<label>North (N)</label>
-<input id="posN" type="number" value="2000">
+<i class="fa-solid fa-location-dot"></i>
 
-<label>Up (U)</label>
-<input id="posU" type="number" value="500">
+Position
+
+</h2>
+
+<div class="row">
+
+<div>
+
+<label>E</label>
+
+<input
+id="posE"
+type="number"
+value="1000">
 
 </div>
 
-<div class="card">
+<div>
 
-<h2>Orientation</h2>
+<label>N</label>
+
+<input
+id="posN"
+type="number"
+value="2000">
+
+</div>
+
+<div>
+
+<label>U</label>
+
+<input
+id="posU"
+type="number"
+value="500">
+
+</div>
+
+</div>
+
+</div>
+
+<!-------------------------------->
+
+<div class="group">
+
+<h2>
+
+<i class="fa-solid fa-compass"></i>
+
+Orientation
+
+</h2>
 
 <select id="orientation">
 
@@ -103,49 +231,122 @@
 
 </div>
 
-<div class="card">
+<!-------------------------------->
 
-<h2>Voice</h2>
+<div class="group">
 
-<button id="voiceBtn">
+<h2>
 
-🎤 Start Voice
+<i class="fa-solid fa-microphone"></i>
 
-</button>
+Voice Input
 
-<p id="voiceResult"></p>
+</h2>
 
-</div>
+<button
+id="voiceBtn">
 
-<div class="card">
-
-<h2>Preview</h2>
-
-<pre id="preview"></pre>
-
-</div>
-
-<div class="buttons">
-
-<button id="generateBtn">
-
-Generate TXT
+🎤 Start Listening
 
 </button>
 
-<button id="downloadBtn">
+<div
+id="voiceStatus">
 
-Download TXT
+Ready
+
+</div>
+
+</div>
+
+<!-------------------------------->
+
+<div class="group">
+
+<h2>
+
+<i class="fa-solid fa-folder-open"></i>
+
+Output Folder
+
+</h2>
+
+<button
+id="selectFolder">
+
+Select Folder
+
+</button>
+
+<div
+id="folderPath">
+
+No Folder Selected
+
+</div>
+
+</div>
+
+<!-------------------------------->
+
+<div class="group buttons">
+
+<button
+id="generateBtn">
+
+Generate
+
+</button>
+
+<button
+id="saveBtn">
+
+Save TXT
 
 </button>
 
 </div>
 
 </div>
+
+<!-------------------------------->
+
+<div class="rightPanel">
+
+<h2>
+
+TXT Preview
+
+</h2>
+
+<pre
+id="preview">
+
+Ready...
+
+</pre>
+
+</div>
+
+</div>
+
+<footer>
+
+Ready |
+
+AVEVA Equipment Studio |
+
+Version 1.0
+
+</footer>
+
+<script src="config.js"></script>
 
 <script src="templates.js"></script>
 
 <script src="generator.js"></script>
+
+<script src="fileManager.js"></script>
 
 <script src="speech.js"></script>
 
