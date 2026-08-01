@@ -1,3 +1,177 @@
+// =========================================
+// AVEVA Equipment Studio
+// Main Application Controller
+// =========================================
+
+
+
+// =========================================
+// Application Start
+// =========================================
+
+
+window.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+
+        console.log(
+            "AVEVA Equipment Studio Started"
+        );
+
+
+
+        loadUserSettings();
+
+
+        initSpeech();
+
+
+        bindEvents();
+
+
+        generateTXT();
+
+
+    }
+);
+
+
+
+
+
+// =========================================
+// Bind Button Events
+// =========================================
+
+
+function bindEvents(){
+
+
+
+    // Generate Button
+
+    document
+    .getElementById(
+        "generateBtn"
+    )
+    .addEventListener(
+
+        "click",
+
+        function(){
+
+
+            generateTXT();
+
+
+        }
+
+    );
+
+
+
+
+
+
+    // Save Button
+
+    document
+    .getElementById(
+        "saveBtn"
+    )
+    .addEventListener(
+
+        "click",
+
+        async function(){
+
+
+            let text =
+            getCurrentTXT();
+
+
+
+            await saveTXTFile(
+                text
+            );
+
+
+        }
+
+    );
+
+
+
+
+
+
+    // Select Folder
+
+    document
+    .getElementById(
+        "selectFolder"
+    )
+    .addEventListener(
+
+        "click",
+
+        async function(){
+
+
+            await selectOutputFolder();
+
+
+        }
+
+    );
+
+
+
+
+
+
+    // Voice Button
+
+    document
+    .getElementById(
+        "voiceBtn"
+    )
+    .addEventListener(
+
+        "click",
+
+        function(){
+
+
+            toggleVoice();
+
+
+        }
+
+    );
+
+
+
+
+
+
+    // Auto Preview
+
+    let inputs =
+
+    document.querySelectorAll(
+
+        "input, select"
+
+    );
+
+
+
+    inputs.forEach(
+
+        element => {
+
 /* =========================================
    AVEVA Equipment Studio
    Professional Light Theme - Full Width
@@ -19,6 +193,7 @@ body {
     overflow: hidden;
 }
 
+            element.addEventListener(
 /* =========================================
    HEADER
    ========================================= */
@@ -35,6 +210,7 @@ header {
     height: 60px;
 }
 
+                "input",
 .logo {
     font-size: 18px;
     font-weight: 600;
@@ -44,6 +220,7 @@ header {
     gap: 10px;
 }
 
+                function(){
 .logo i {
     font-size: 22px;
     color: #0066b3;
@@ -57,6 +234,7 @@ header {
     gap: 8px;
 }
 
+                    generateTXT();
 .green-dot {
     display: inline-block;
     width: 10px;
@@ -72,10 +250,12 @@ header {
     50% { opacity: 0.5; }
 }
 
+                }
 /* =========================================
    MAIN - Full Width
    ========================================= */
 
+            );
 .main {
     flex: 1;
     padding: 20px;
@@ -106,6 +286,7 @@ header {
    GROUPS
    ========================================= */
 
+            element.addEventListener(
 .group {
     background: #f8fafc;
     border-radius: 10px;
@@ -114,10 +295,12 @@ header {
     transition: border-color 0.2s;
 }
 
+                "change",
 .group:hover {
     border-color: #d0d7de;
 }
 
+                function(){
 .group h2 {
     font-size: 14px;
     font-weight: 600;
@@ -134,6 +317,7 @@ header {
     width: 20px;
 }
 
+                    generateTXT();
 .group label {
     font-size: 12px;
     font-weight: 500;
@@ -147,6 +331,7 @@ header {
     margin-top: 0;
 }
 
+                }
 .group input,
 .group select {
     width: 100%;
@@ -160,6 +345,7 @@ header {
     transition: border-color 0.2s, box-shadow 0.2s;
 }
 
+            );
 .group input:focus,
 .group select:focus {
     outline: none;
@@ -171,11 +357,13 @@ header {
     -moz-appearance: textfield;
 }
 
+        }
 .group input[type="number"]::-webkit-outer-spin-button,
 .group input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
 }
 
+    );
 .group .row {
     display: flex;
     gap: 12px;
@@ -244,6 +432,9 @@ header {
     flex-direction: column;
 }
 
+// =========================================
+// Load Previous Settings
+// =========================================
 .chat-container {
     flex: 1;
     min-height: 180px;
@@ -261,6 +452,7 @@ header {
     width: 5px;
 }
 
+function loadUserSettings(){
 .chat-container::-webkit-scrollbar-track {
     background: #f0f2f5;
     border-radius: 10px;
@@ -283,11 +475,13 @@ header {
     line-height: 1.5;
 }
 
+    let data =
 .chat-message.bot {
     background: #e8f0fe;
     color: #0d3a6e;
 }
 
+    loadSettings();
 .chat-message.user {
     background: #e6f7e6;
     color: #1a5e1a;
@@ -311,12 +505,14 @@ header {
     white-space: pre-wrap;
 }
 
+    if(!data){
 .typing-indicator {
     display: inline-block;
     animation: dots 1.4s infinite;
     font-weight: bold;
 }
 
+        return;
 @keyframes dots {
     0%, 20% { content: ''; }
     40% { content: '.'; }
@@ -333,6 +529,73 @@ header {
         opacity: 1;
         transform: translateY(0);
     }
+
+
+
+
+
+    setValue(
+        "eqName",
+        data.NAME
+    );
+
+
+
+    setValue(
+        "length",
+        data.LENGTH
+    );
+
+
+
+    setValue(
+        "width",
+        data.WIDTH
+    );
+
+
+
+    setValue(
+        "height",
+        data.HEIGHT
+    );
+
+
+
+    setValue(
+        "radius",
+        data.RADIUS
+    );
+
+
+
+    setValue(
+        "posE",
+        data.POS_E
+    );
+
+
+
+    setValue(
+        "posN",
+        data.POS_N
+    );
+
+
+
+    setValue(
+        "posU",
+        data.POS_U
+    );
+
+
+
+    setValue(
+        "orientation",
+        data.ORI
+    );
+
+
 }
 
 .voice-controls {
@@ -368,6 +631,9 @@ header {
     animation: pulse 1.5s infinite;
 }
 
+// =========================================
+// Safe Set Value
+// =========================================
 @keyframes pulse {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.7; }
@@ -379,6 +645,7 @@ header {
     transform: none;
 }
 
+function setValue(id,value){
 .clear-btn {
     padding: 10px 16px;
     background: #6c7a8a;
@@ -403,6 +670,7 @@ header {
     min-height: 24px;
 }
 
+    let element =
 /* =========================================
    BUTTONS GROUP (Generate & Save)
    ========================================= */
@@ -416,6 +684,7 @@ header {
     padding: 8px 0 0;
 }
 
+    document.getElementById(id);
 .group.buttons button {
     flex: 1;
     padding: 12px;
@@ -439,6 +708,8 @@ header {
     box-shadow: 0 4px 12px rgba(0, 102, 179, 0.3);
 }
 
+    if(element &&
+       value !== undefined){
 #saveBtn {
     background: #1a3a5c;
     color: white;
@@ -450,6 +721,7 @@ header {
     box-shadow: 0 4px 12px rgba(26, 58, 92, 0.3);
 }
 
+        element.value=value;
 /* =========================================
    FOOTER
    ========================================= */
@@ -478,7 +750,65 @@ footer {
         gap: 16px;
         padding: 20px;
     }
+
+
 }
+
+
+
+
+
+// =========================================
+// Keyboard Shortcut
+// =========================================
+
+
+document.addEventListener(
+
+    "keydown",
+
+    function(e){
+
+
+
+        // CTRL + S
+
+        if(
+
+            e.ctrlKey &&
+            e.key==="s"
+
+        ){
+
+
+            e.preventDefault();
+
+
+            saveTXTFile(
+                getCurrentTXT()
+            );
+
+
+        }
+
+
+
+        // F5 Generate
+
+        if(
+            e.key==="F5"
+        ){
+
+
+            e.preventDefault();
+
+
+            generateTXT();
+
+
+        }
+
+
 
 @media (max-width: 768px) {
     .main {
@@ -514,6 +844,7 @@ footer {
     }
 }
 
+);
 @media (max-width: 480px) {
     .group .row {
         flex-direction: column;
