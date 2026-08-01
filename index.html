@@ -2,356 +2,161 @@
 <html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AVEVA Equipment Studio</title>
 
-<meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
-
-<title>AVEVA Equipment Studio</title>
-
-<link rel="stylesheet"
-      href="style.css">
-
-<link rel="preconnect"
-      href="https://fonts.googleapis.com">
-
-<link rel="preconnect"
-      href="https://fonts.gstatic.com"
-      crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap"
-      rel="stylesheet">
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
 
 <body>
-
-<header>
-
-<div class="logo">
-
-<i class="fa-solid fa-cube"></i>
-
-AVEVA Equipment Studio
-
-</div>
-
-<div class="status">
-
-<span class="green-dot"></span>
-
-Ready
-
-</div>
-
-</header>
-
-<div class="main">
-
-<!-------------------------------->
-
-<div class="leftPanel">
-
-<!-------------------------------->
-
-<div class="group">
-
-<h2>
-
-<i class="fa-solid fa-box"></i>
-
-Equipment
-
-</h2>
-
-<label>
-
-Equipment Name
-
-</label>
-
-<input
-id="eqName"
-value="EQ001">
-
-<label>
-
-Profile
-
-</label>
-
-<select id="profile">
-
-<option>ROUNDRECT</option>
-
-</select>
-
-</div>
-
-<!-------------------------------->
-
-<div class="group">
-
-<h2>
-
-<i class="fa-solid fa-ruler-combined"></i>
-
-Dimensions
-
-</h2>
-
-<label>
-
-Length
-
-</label>
-
-<input
-id="length"
-type="number"
-value="2000">
-
-<label>
-
-Width
-
-</label>
-
-<input
-id="width"
-type="number"
-value="1000">
-
-<label>
-
-Height
-
-</label>
-
-<input
-id="height"
-type="number"
-value="1500">
-
-<label>
-
-Corner Radius
-
-</label>
-
-<input
-id="radius"
-type="number"
-value="100">
-
-</div>
-
-<!-------------------------------->
-
-<div class="group">
-
-<h2>
-
-<i class="fa-solid fa-location-dot"></i>
-
-Position
-
-</h2>
-
-<div class="row">
-
-<div>
-
-<label>E</label>
-
-<input
-id="posE"
-type="number"
-value="1000">
-
-</div>
-
-<div>
-
-<label>N</label>
-
-<input
-id="posN"
-type="number"
-value="2000">
-
-</div>
-
-<div>
-
-<label>U</label>
-
-<input
-id="posU"
-type="number"
-value="500">
-
-</div>
-
-</div>
-
-</div>
-
-<!-------------------------------->
-
-<div class="group">
-
-<h2>
-
-<i class="fa-solid fa-compass"></i>
-
-Orientation
-
-</h2>
-
-<select id="orientation">
-
-<option value="Y IS N AND Z IS U">+Y</option>
-
-<option value="Y IS S AND Z IS U">-Y</option>
-
-<option value="X IS E AND Z IS U">+X</option>
-
-<option value="X IS W AND Z IS U">-X</option>
-
-<option value="Z IS U AND Y IS N">+Z</option>
-
-<option value="Z IS D AND Y IS N">-Z</option>
-
-</select>
-
-</div>
-
-<!-------------------------------->
-
-<div class="group">
-
-<h2>
-
-<i class="fa-solid fa-microphone"></i>
-
-Voice Input
-
-</h2>
-
-<button
-id="voiceBtn">
-
-🎤 Start Listening
-
-</button>
-
-<div
-id="voiceStatus">
-
-Ready
-
-</div>
-
-</div>
-
-<!-------------------------------->
-
-<div class="group">
-
-<h2>
-
-<i class="fa-solid fa-folder-open"></i>
-
-Output Folder
-
-</h2>
-
-<button
-id="selectFolder">
-
-Select Folder
-
-</button>
-
-<div
-id="folderPath">
-
-No Folder Selected
-
-</div>
-
-</div>
-
-<!-------------------------------->
-
-<div class="group buttons">
-
-<button
-id="generateBtn">
-
-Generate
-
-</button>
-
-<button
-id="saveBtn">
-
-Save TXT
-
-</button>
-
-</div>
-
-</div>
-
-<!-------------------------------->
-
-<div class="rightPanel">
-
-<h2>
-
-TXT Preview
-
-</h2>
-
-<pre
-id="preview">
-
-Ready...
-
-</pre>
-
-</div>
-
-</div>
-
-<footer>
-
-Ready |
-
-AVEVA Equipment Studio |
-
-Version 1.0
-
-</footer>
-
-<script src="config.js"></script>
-
-<script src="templates.js"></script>
-
-<script src="generator.js"></script>
-
-<script src="fileManager.js"></script>
-
-<script src="speech.js"></script>
-
-<script src="script.js"></script>
-
+    <header>
+        <div class="logo">
+            <i class="fa-solid fa-cube"></i>
+            AVEVA Equipment Studio
+        </div>
+        <div class="status">
+            <span class="green-dot"></span>
+            Ready
+        </div>
+    </header>
+
+    <div class="main">
+        <!-- LEFT PANEL -->
+        <div class="leftPanel">
+            <!-- Equipment Group -->
+            <div class="group">
+                <h2>
+                    <i class="fa-solid fa-box"></i>
+                    Equipment
+                </h2>
+                <label>Equipment Name</label>
+                <input id="eqName" value="EQ001">
+                <label>Profile</label>
+                <select id="profile">
+                    <option>ROUNDRECT</option>
+                </select>
+            </div>
+
+            <!-- Dimensions Group -->
+            <div class="group">
+                <h2>
+                    <i class="fa-solid fa-ruler-combined"></i>
+                    Dimensions
+                </h2>
+                <label>Length</label>
+                <input id="length" type="number" value="2000">
+                <label>Width</label>
+                <input id="width" type="number" value="1000">
+                <label>Height</label>
+                <input id="height" type="number" value="1500">
+                <label>Corner Radius</label>
+                <input id="radius" type="number" value="100">
+            </div>
+
+            <!-- Position Group -->
+            <div class="group">
+                <h2>
+                    <i class="fa-solid fa-location-dot"></i>
+                    Position
+                </h2>
+                <div class="row">
+                    <div>
+                        <label>E</label>
+                        <input id="posE" type="number" value="1000">
+                    </div>
+                    <div>
+                        <label>N</label>
+                        <input id="posN" type="number" value="2000">
+                    </div>
+                    <div>
+                        <label>U</label>
+                        <input id="posU" type="number" value="500">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Orientation Group -->
+            <div class="group">
+                <h2>
+                    <i class="fa-solid fa-compass"></i>
+                    Orientation
+                </h2>
+                <select id="orientation">
+                    <option value="Y IS N AND Z IS U">+Y</option>
+                    <option value="Y IS S AND Z IS U">-Y</option>
+                    <option value="X IS E AND Z IS U">+X</option>
+                    <option value="X IS W AND Z IS U">-X</option>
+                    <option value="Z IS U AND Y IS N">+Z</option>
+                    <option value="Z IS D AND Y IS N">-Z</option>
+                </select>
+            </div>
+
+            <!-- Voice Input - CHATBOX STYLE -->
+            <div class="group voice-chat-group">
+                <h2>
+                    <i class="fa-solid fa-microphone"></i>
+                    Voice Chat
+                </h2>
+                
+                <!-- Chat messages container -->
+                <div id="chatContainer" class="chat-container">
+                    <div class="chat-message bot">
+                        <i class="fa-solid fa-robot"></i>
+                        <span>Hello! Please speak your equipment dimensions. I'll listen for length, width, height, and radius.</span>
+                    </div>
+                </div>
+
+                <!-- Voice controls -->
+                <div class="voice-controls">
+                    <button id="voiceBtn" class="voice-btn">
+                        <i class="fa-solid fa-microphone"></i>
+                        Start Listening
+                    </button>
+                    <button id="clearChatBtn" class="clear-btn" title="Clear chat">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </div>
+                <div id="voiceStatus" class="voice-status">Ready</div>
+            </div>
+
+            <!-- Output Folder -->
+            <div class="group">
+                <h2>
+                    <i class="fa-solid fa-folder-open"></i>
+                    Output Folder
+                </h2>
+                <button id="selectFolder">Select Folder</button>
+                <div id="folderPath">No Folder Selected</div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="group buttons">
+                <button id="generateBtn">Generate</button>
+                <button id="saveBtn">Save TXT</button>
+            </div>
+        </div>
+
+        <!-- RIGHT PANEL - REMOVED TXT Preview -->
+        <div class="rightPanel" style="display: none;">
+            <!-- Hidden - removed TXT Review -->
+        </div>
+    </div>
+
+    <footer>
+        Ready | AVEVA Equipment Studio | Version 1.0
+    </footer>
+
+    <script src="config.js"></script>
+    <script src="templates.js"></script>
+    <script src="generator.js"></script>
+    <script src="fileManager.js"></script>
+    <script src="speech.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>
