@@ -25,10 +25,9 @@
         </div>
     </header>
 
-    <!-- MAIN CONTENT - Full width, no right panel -->
-    <div class="main full-width">
-        <!-- LEFT PANEL - Now takes full width -->
-        <div class="leftPanel full-width">
+    <!-- MAIN - Full width, no right panel -->
+    <div class="main">
+        <div class="leftPanel">
             <!-- Equipment Group -->
             <div class="group">
                 <h2>
@@ -50,9 +49,9 @@
                     Dimensions
                 </h2>
                 <label>Length</label>
-                <input id="length" type="number" value="2000">
+                <input id="length" type="number" value="5000">
                 <label>Width</label>
-                <input id="width" type="number" value="1000">
+                <input id="width" type="number" value="5000">
                 <label>Height</label>
                 <input id="height" type="number" value="1500">
                 <label>Corner Radius</label>
@@ -97,14 +96,13 @@
                 </select>
             </div>
 
-            <!-- Voice Input - CHATBOX STYLE -->
+            <!-- Voice Chat Group -->
             <div class="group voice-chat-group">
                 <h2>
                     <i class="fa-solid fa-microphone"></i>
                     Voice Chat
                 </h2>
                 
-                <!-- Chat messages container -->
                 <div id="chatContainer" class="chat-container">
                     <div class="chat-message bot">
                         <i class="fa-solid fa-robot"></i>
@@ -120,7 +118,6 @@
                     </div>
                 </div>
 
-                <!-- Voice controls -->
                 <div class="voice-controls">
                     <button id="voiceBtn" class="voice-btn">
                         <i class="fa-solid fa-microphone"></i>
