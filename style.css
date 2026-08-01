@@ -1,721 +1,6 @@
 /* =========================================
    AVEVA Equipment Studio
-   Professional Dark CAD Interface
-========================================= */
-
-
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
-
-
-body{
-
-    font-family:
-    'Inter',
-    'Segoe UI',
-    Arial,
-    sans-serif;
-
-    background:#151515;
-
-    color:#e6e6e6;
-
-    height:100vh;
-
-    overflow:hidden;
-
-}
-
-
-/* ===============================
-        HEADER
-================================ */
-
-header{
-
-    height:60px;
-
-    background:#202020;
-
-    border-bottom:1px solid #333;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:space-between;
-
-    padding:0 25px;
-
-}
-
-
-.logo{
-
-    font-size:20px;
-
-    font-weight:600;
-
-    color:#4fc3f7;
-
-}
-
-
-.logo i{
-
-    margin-right:10px;
-
-}
-
-
-.status{
-
-    font-size:14px;
-
-    color:#ccc;
-
-}
-
-
-.green-dot{
-
-    display:inline-block;
-
-    width:10px;
-
-    height:10px;
-
-    background:#00e676;
-
-    border-radius:50%;
-
-    margin-right:8px;
-
-}
-
-
-/* ===============================
-        MAIN LAYOUT
-================================ */
-
-.main{
-
-    display:flex;
-
-    height:calc(100vh - 100px);
-
-}
-
-
-/* ===============================
-        LEFT PANEL
-================================ */
-
-.leftPanel{
-
-    width:380px;
-
-    background:#1e1e1e;
-
-    border-right:1px solid #333;
-
-    padding:20px;
-
-    overflow-y:auto;
-
-}
-
-
-
-.group{
-
-    background:#252525;
-
-    border:1px solid #363636;
-
-    border-radius:8px;
-
-    padding:15px;
-
-    margin-bottom:15px;
-
-}
-
-
-
-.group h2{
-
-    font-size:15px;
-
-    color:#4fc3f7;
-
-    margin-bottom:15px;
-
-    font-weight:500;
-
-}
-
-
-label{
-
-    display:block;
-
-    font-size:13px;
-
-    color:#aaa;
-
-    margin-bottom:5px;
-
-}
-
-
-input,
-select{
-
-
-    width:100%;
-
-    height:38px;
-
-    background:#111;
-
-    color:white;
-
-    border:1px solid #444;
-
-    border-radius:5px;
-
-    padding:0 10px;
-
-    margin-bottom:12px;
-
-    font-size:14px;
-
-}
-
-
-
-input:focus,
-select:focus{
-
-    outline:none;
-
-    border-color:#4fc3f7;
-
-}
-
-
-/* ===============================
-        POSITION ROW
-================================ */
-
-
-.row{
-
-    display:flex;
-
-    gap:10px;
-
-}
-
-
-.row div{
-
-    flex:1;
-
-}
-
-
-
-/* ===============================
-        RIGHT PANEL
-================================ */
-
-.rightPanel{
-
-
-    flex:1;
-
-    padding:25px;
-
-    background:#181818;
-
-}
-
-
-.rightPanel h2{
-
-    color:#4fc3f7;
-
-    margin-bottom:15px;
-
-    font-size:18px;
-
-}
-
-
-pre{
-
-
-    height:calc(100% - 45px);
-
-    background:#0d0d0d;
-
-    border:1px solid #333;
-
-    border-radius:8px;
-
-
-    padding:25px;
-
-
-    color:#00ff90;
-
-
-    font-family:
-
-    'Consolas',
-    monospace;
-
-
-    font-size:15px;
-
-
-    line-height:1.6;
-
-
-    overflow:auto;
-
-
-}
-
-
-/* ===============================
-        BUTTONS
-================================ */
-
-
-button{
-
-
-    width:100%;
-
-    height:42px;
-
-
-    background:#0066cc;
-
-
-    color:white;
-
-
-    border:none;
-
-
-    border-radius:6px;
-
-
-    cursor:pointer;
-
-
-    font-size:14px;
-
-
-    font-weight:500;
-
-
-    transition:.25s;
-
-
-}
-
-
-button:hover{
-
-
-    background:#0088ff;
-
-
-    transform:translateY(-1px);
-
-
-}
-
-
-button:active{
-
-    transform:scale(.98);
-
-}
-
-
-
-.buttons{
-
-    display:flex;
-
-    gap:10px;
-
-}
-
-
-.buttons button:first-child{
-
-    background:#009688;
-
-}
-
-
-.buttons button:first-child:hover{
-
-    background:#00bfa5;
-
-}
-
-
-
-.buttons button:last-child{
-
-    background:#673ab7;
-
-}
-
-
-.buttons button:last-child:hover{
-
-    background:#7e57c2;
-
-}
-
-
-
-/* ===============================
-        VOICE STATUS
-================================ */
-
-
-#voiceStatus{
-
-
-    margin-top:10px;
-
-
-    padding:10px;
-
-
-    background:#111;
-
-
-    border-radius:5px;
-
-
-    color:#00e676;
-
-
-    text-align:center;
-
-
-    font-size:13px;
-
-}
-
-
-
-/* ===============================
-        FOLDER PATH
-================================ */
-
-
-#folderPath{
-
-
-    margin-top:10px;
-
-
-    padding:10px;
-
-
-    background:#111;
-
-
-    border-radius:5px;
-
-
-    color:#aaa;
-
-
-    font-size:12px;
-
-
-    word-break:break-all;
-
-}
-
-
-
-/* ===============================
-        FOOTER
-================================ */
-
-
-footer{
-
-
-    height:40px;
-
-
-    background:#202020;
-
-
-    border-top:1px solid #333;
-
-
-    display:flex;
-
-
-    align-items:center;
-
-
-    padding-left:20px;
-
-
-    color:#888;
-
-
-    font-size:12px;
-
-}
-
-
-
-/* ===============================
-        SCROLL BAR
-================================ */
-
-
-::-webkit-scrollbar{
-
-    width:8px;
-
-}
-
-
-::-webkit-scrollbar-track{
-
-    background:#111;
-
-}
-
-
-::-webkit-scrollbar-thumb{
-
-    background:#444;
-
-    border-radius:5px;
-
-}
-
-
-
-/* ===============================
-        RESPONSIVE
-================================ */
-
-
-@media(max-width:900px){
-
-
-    body{
-
-        overflow:auto;
-
-    }
-
-
-    .main{
-
-        flex-direction:column;
-
-        height:auto;
-
-    }
-
-
-    .leftPanel{
-
-        width:100%;
-
-    }
-
-
-    .rightPanel{
-
-        height:500px;
-
-    }
-
-}
-
-
-/* Voice Chat Styles */
-.voice-chat-group {
-    flex: 1;
-    min-height: 250px;
-    display: flex;
-    flex-direction: column;
-}
-
-.chat-container {
-    flex: 1;
-    min-height: 150px;
-    max-height: 250px;
-    overflow-y: auto;
-    background: #f8f9fa;
-    border-radius: 8px;
-    padding: 10px;
-    margin: 8px 0;
-    border: 1px solid #e0e0e0;
-}
-
-.chat-message {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    padding: 8px 10px;
-    margin-bottom: 8px;
-    border-radius: 8px;
-    animation: slideIn 0.3s ease;
-}
-
-.chat-message.bot {
-    background: #e3f2fd;
-    color: #0d47a1;
-}
-
-.chat-message.user {
-    background: #e8f5e9;
-    color: #1b5e20;
-}
-
-.chat-message.interim {
-    opacity: 0.7;
-    background: #f3e5f5;
-}
-
-.chat-message i {
-    font-size: 16px;
-    margin-top: 2px;
-    min-width: 20px;
-}
-
-.chat-message span {
-    flex: 1;
-    white-space: pre-wrap;
-    word-break: break-word;
-    line-height: 1.5;
-    font-size: 13px;
-}
-
-.typing-indicator {
-    display: inline-block;
-    animation: dots 1.4s infinite;
-}
-
-@keyframes dots {
-    0%, 20% { content: ''; }
-    40% { content: '.'; }
-    60% { content: '..'; }
-    80%, 100% { content: '...'; }
-}
-
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.voice-controls {
-    display: flex;
-    gap: 10px;
-    margin: 6px 0;
-}
-
-.voice-btn {
-    flex: 1;
-    padding: 10px 16px;
-    background: #1976d2;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-}
-
-.voice-btn:hover {
-    background: #1565c0;
-    transform: scale(1.02);
-}
-
-.voice-btn.listening {
-    background: #d32f2f;
-    animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.7; }
-}
-
-.voice-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-.clear-btn {
-    padding: 10px 14px;
-    background: #757575;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.clear-btn:hover {
-    background: #616161;
-}
-
-.voice-status {
-    font-size: 13px;
-    color: #666;
-    text-align: center;
-    padding: 4px 0;
-    font-style: italic;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .chat-container {
-        max-height: 180px;
-        min-height: 100px;
-    }
-}
-
-/* =========================================
-   BASE STYLES
+   Professional Light Theme - Full Width
    ========================================= */
 
 * {
@@ -725,7 +10,7 @@ footer{
 }
 
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
     background: #f0f2f5;
     color: #1a2332;
     height: 100vh;
@@ -747,6 +32,7 @@ header {
     border-bottom: 1px solid #e0e4e8;
     flex-shrink: 0;
     box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    height: 60px;
 }
 
 .logo {
@@ -787,25 +73,24 @@ header {
 }
 
 /* =========================================
-   MAIN LAYOUT - FULL WIDTH
+   MAIN - Full Width
    ========================================= */
 
 .main {
     flex: 1;
-    display: flex;
+    padding: 20px;
     overflow: hidden;
-    padding: 20px;
-    gap: 20px;
     background: #f0f2f5;
+    display: flex;
 }
 
-.main.full-width {
-    padding: 20px;
-}
+/* =========================================
+   LEFT PANEL - Full Width Grid
+   ========================================= */
 
-/* LEFT PANEL - FULL WIDTH */
 .leftPanel {
-    flex: 1;
+    width: 100%;
+    height: 100%;
     background: #ffffff;
     border-radius: 12px;
     padding: 24px 28px;
@@ -815,15 +100,6 @@ header {
     grid-template-columns: 1fr 1fr;
     gap: 20px 30px;
     align-content: start;
-}
-
-.leftPanel.full-width {
-    grid-template-columns: 1fr 1fr;
-}
-
-/* Remove right panel */
-.rightPanel {
-    display: none !important;
 }
 
 /* =========================================
@@ -918,6 +194,43 @@ header {
 
 .group .row input {
     padding: 8px 10px;
+}
+
+/* =========================================
+   BUTTONS IN GROUPS
+   ========================================= */
+
+.group button {
+    width: 100%;
+    padding: 10px;
+    background: #0066b3;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.group button:hover {
+    background: #005299;
+    transform: translateY(-1px);
+}
+
+.group button:active {
+    transform: scale(0.98);
+}
+
+/* Output Folder */
+#folderPath {
+    margin-top: 10px;
+    padding: 10px;
+    background: #f0f2f5;
+    border-radius: 5px;
+    color: #4a5a6e;
+    font-size: 12px;
+    word-break: break-all;
 }
 
 /* =========================================
@@ -1091,7 +404,7 @@ header {
 }
 
 /* =========================================
-   BUTTONS GROUP
+   BUTTONS GROUP (Generate & Save)
    ========================================= */
 
 .group.buttons {
@@ -1112,6 +425,7 @@ header {
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.2s;
+    height: 44px;
 }
 
 #generateBtn {
@@ -1148,6 +462,10 @@ footer {
     color: #6a7a8e;
     flex-shrink: 0;
     text-align: center;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* =========================================
@@ -1184,6 +502,7 @@ footer {
     
     header {
         padding: 10px 16px;
+        height: 50px;
     }
     
     .logo {
