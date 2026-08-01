@@ -25,9 +25,10 @@
         </div>
     </header>
 
-    <div class="main">
-        <!-- LEFT PANEL -->
-        <div class="leftPanel">
+    <!-- MAIN CONTENT - Full width, no right panel -->
+    <div class="main full-width">
+        <!-- LEFT PANEL - Now takes full width -->
+        <div class="leftPanel full-width">
             <!-- Equipment Group -->
             <div class="group">
                 <h2>
@@ -107,7 +108,15 @@
                 <div id="chatContainer" class="chat-container">
                     <div class="chat-message bot">
                         <i class="fa-solid fa-robot"></i>
-                        <span>Hello! Please speak your equipment dimensions. I'll listen for length, width, height, and radius.</span>
+                        <span>👋 Hello! I'm your voice assistant for equipment dimensions.</span>
+                    </div>
+                    <div class="chat-message bot">
+                        <i class="fa-solid fa-robot"></i>
+                        <span>💡 Please speak your dimensions. I'll listen for Length, Width, Height, and Corner Radius.</span>
+                    </div>
+                    <div class="chat-message bot">
+                        <i class="fa-solid fa-robot"></i>
+                        <span>📝 Example: "Length 2000, Width 1000, Height 1500, Radius 100"</span>
                     </div>
                 </div>
 
@@ -139,11 +148,6 @@
                 <button id="generateBtn">Generate</button>
                 <button id="saveBtn">Save TXT</button>
             </div>
-        </div>
-
-        <!-- RIGHT PANEL - REMOVED TXT Preview -->
-        <div class="rightPanel" style="display: none;">
-            <!-- Hidden - removed TXT Review -->
         </div>
     </div>
 
