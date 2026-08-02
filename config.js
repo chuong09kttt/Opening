@@ -1,6 +1,4 @@
-// Configuration and DOM references
-const CONFIG = {
-    // DOM element IDs
+var CONFIG = {
     elements: {
         eqName: 'eqName',
         profile: 'profile',
@@ -22,7 +20,6 @@ const CONFIG = {
         selectFolder: 'selectFolder'
     },
     
-    // Default values
     defaults: {
         eqName: 'EQ001',
         length: 5000,
@@ -34,19 +31,5 @@ const CONFIG = {
         posU: 500,
         profile: 'ROUNDRECT',
         orientation: 'Y IS N AND Z IS U'
-    },
-    
-    // Helper function to get all elements
-    getElements: function() {
-        const els = {};
-        for (const [key, id] of Object.entries(this.elements)) {
-            els[key] = document.getElementById(id);
-        }
-        return els;
     }
 };
-
-// Global export
-if (typeof window !== 'undefined') {
-    window.CONFIG = CONFIG;
-}
