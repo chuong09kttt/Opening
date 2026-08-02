@@ -34,10 +34,19 @@ const CONFIG = {
         posU: 500,
         profile: 'ROUNDRECT',
         orientation: 'Y IS N AND Z IS U'
+    },
+    
+    // Helper function to get all elements
+    getElements: function() {
+        const els = {};
+        for (const [key, id] of Object.entries(this.elements)) {
+            els[key] = document.getElementById(id);
+        }
+        return els;
     }
 };
 
-// Export for use in other files
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = CONFIG;
+// Global export
+if (typeof window !== 'undefined') {
+    window.CONFIG = CONFIG;
 }
