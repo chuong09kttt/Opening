@@ -1,7 +1,5 @@
 var CONFIG = {
     elements: {
-        eqName: 'eqName',
-        profile: 'profile',
         length: 'length',
         width: 'width',
         height: 'height',
@@ -10,18 +8,14 @@ var CONFIG = {
         posN: 'posN',
         posU: 'posU',
         orientation: 'orientation',
-        folderPath: 'folderPath',
         chatContainer: 'chatContainer',
         voiceBtn: 'voiceBtn',
         clearChatBtn: 'clearChatBtn',
         voiceStatus: 'voiceStatus',
-        generateBtn: 'generateBtn',
-        saveBtn: 'saveBtn',
-        selectFolder: 'selectFolder'
+        exportBtn: 'exportBtn'
     },
     
     defaults: {
-        eqName: 'EQ001',
         length: 5000,
         width: 5000,
         height: 1500,
@@ -29,7 +23,6 @@ var CONFIG = {
         posE: 1000,
         posN: 2000,
         posU: 500,
-        profile: 'ROUNDRECT',
         orientation: 'Y IS N AND Z IS U'
     }
 };
