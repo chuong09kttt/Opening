@@ -26,7 +26,6 @@ body {
     overflow: hidden;
 }
 
-/* Header */
 header {
     background: #ffffff;
     padding: 12px 24px;
@@ -74,7 +73,6 @@ header {
     50% { opacity: 0.5; }
 }
 
-/* Main */
 .main {
     padding: 16px 20px 20px;
     background: #f8fafc;
@@ -86,7 +84,6 @@ header {
     gap: 14px;
 }
 
-/* Groups */
 .group {
     background: #ffffff;
     border-radius: 10px;
@@ -181,7 +178,6 @@ header {
     text-align: center;
 }
 
-/* Voice Chat */
 .voice-chat-group {
     grid-column: 1 / -1;
     display: flex;
@@ -328,7 +324,6 @@ header {
     min-height: 20px;
 }
 
-/* Output Folder */
 .folder-group {
     grid-column: 1 / -1;
 }
@@ -362,7 +357,6 @@ header {
     border: 1px dashed #d0d7de;
 }
 
-/* Buttons */
 .buttons-group {
     grid-column: 1 / -1;
     display: flex;
@@ -406,7 +400,6 @@ header {
     box-shadow: 0 4px 12px rgba(26, 58, 92, 0.3);
 }
 
-/* Footer */
 footer {
     background: #ffffff;
     padding: 8px 24px;
@@ -417,7 +410,6 @@ footer {
     text-align: center;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
     body {
         padding: 10px;
