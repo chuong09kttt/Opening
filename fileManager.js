@@ -1,334 +1,49 @@
-// =========================================
-// AVEVA Equipment Studio
-// File Manager
-// File System Access API
-// =========================================
+// File management utilities
+const FileManager = {
+    // Simulate folder selection
+    selectFolder: function() {
+        // In real app, use showDirectoryPicker or similar
+        const fakePath = '/home/user/projects/aveva_output';
+        return fakePath;
+    },
 
-
-let outputDirectory = null;
-
-let outputFileName = 
-"Equipment.txt";
-
-
-
-
-// =========================================
-// Select Output Folder
-// =========================================
-
-async function selectOutputFolder(){
-
-
-    try{
-
-
-        // Chrome / Edge API
-
-        outputDirectory =
-
-        await window
-        .showDirectoryPicker();
-
-
-
-        localStorage.setItem(
-
-            APP_CONFIG
-            .FILE_SYSTEM
-            .SAVE_FOLDER_KEY,
-
-            "selected"
-
-        );
-
-
-
-        updateFolderStatus();
-
-
-
+    // Save data to TXT file
+    saveToTXT: function(data, filename = 'equipment_config.txt') {
+        const content = this.formatData(data);
+        const blob = new Blob([content], { type: 'text/plain' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = filename;
+        a.click();
+        URL.revokeObjectURL(a.href);
         return true;
+    },
 
-
+    // Format data for TXT export
+    formatData: function(data) {
+        return `AVEVA Equipment Studio
+================================
+Equipment: ${data.name}
+Profile: ${data.profile}
+--------------------------------
+Dimensions:
+  Length: ${data.length}
+  Width: ${data.width}
+  Height: ${data.height}
+  Corner Radius: ${data.radius}
+--------------------------------
+Position:
+  E: ${data.posE}
+  N: ${data.posN}
+  U: ${data.posU}
+--------------------------------
+Orientation: ${data.orientation}
+================================
+Generated: ${new Date().toLocaleString()}`;
     }
-
-
-    catch(error){
-
-
-        console.log(
-            "Folder selection cancelled"
-        );
-
-
-        return false;
-
-
-    }
-
-}
-
-
-
-
-// =========================================
-// Display Folder Status
-// =========================================
-
-function updateFolderStatus(){
-
-
-    let box =
-
-    document
-    .getElementById(
-        "folderPath"
-    );
-
-
-
-    if(box){
-
-
-        if(outputDirectory){
-
-
-            box.innerHTML =
-
-            "📂 "
-            +
-            outputDirectory.name;
-
-
-        }
-
-        else{
-
-
-            box.innerHTML =
-
-            "No Folder Selected";
-
-
-        }
-
-
-    }
-
-}
-
-
-
-
-// =========================================
-// Save TXT directly
-// =========================================
-
-async function saveTXTFile(text){
-
-
-
-    if(!text){
-
-
-        alert(
-            "No TXT data!"
-        );
-
-
-        return;
-
-
-    }
-
-
-
-
-
-    // =================================
-    // If folder selected
-    // =================================
-
-
-    if(outputDirectory){
-
-
-        try{
-
-
-            let fileHandle =
-
-            await outputDirectory
-            .getFileHandle(
-
-                outputFileName,
-
-                {
-
-                    create:true
-
-                }
-
-            );
-
-
-
-            let writable =
-
-            await fileHandle
-            .createWritable();
-
-
-
-            await writable
-            .write(text);
-
-
-
-            await writable
-            .close();
-
-
-
-            showSaveMessage(
-                "Saved: "
-                +
-                outputFileName
-            );
-
-
-
-            return;
-
-
-        }
-
-
-        catch(error){
-
-
-            console.error(
-                error
-            );
-
-
-        }
-
-
-    }
-
-
-
-
-
-    // =================================
-    // Fallback Download
-    // =================================
-
-
-    downloadFallback(text);
-
-
-}
-
-
-
-
-
-// =========================================
-// Browser fallback download
-// =========================================
-
-function downloadFallback(text){
-
-
-
-    let blob =
-
-    new Blob(
-
-        [text],
-
-        {
-
-            type:
-            "text/plain"
-
-        }
-
-    );
-
-
-
-    let link =
-
-    document
-    .createElement(
-        "a"
-    );
-
-
-
-    link.href =
-
-    URL
-    .createObjectURL(
-        blob
-    );
-
-
-
-    link.download =
-
-    outputFileName;
-
-
-
-    link.click();
-
-
-
-    showSaveMessage(
-        "Downloaded: "
-        +
-        outputFileName
-    );
-
-
-}
-
-
-
-
-
-// =========================================
-// Status Message
-// =========================================
-
-function showSaveMessage(message){
-
-
-
-    let status =
-
-    document
-    .getElementById(
-        "voiceStatus"
-    );
-
-
-
-    if(status){
-
-
-        status.innerHTML =
-        "✔ "
-        +
-        message;
-
-
-    }
-
-
+};
+
+// Global export
+if (typeof window !== 'undefined') {
+    window.FileManager = FileManager;
 }
