@@ -1,95 +1,101 @@
-// =========================================
-// AVEVA Equipment Studio
-// Template Database
-// =========================================
+// Template utilities for chat messages
+const Templates = {
+    // Welcome message
+    welcome: function() {
+        return {
+            bot: true,
+            text: '👋 Welcome! Use voice or manual input.'
+        };
+    },
 
+    // Help message
+    help: function() {
+        return {
+            bot: true,
+            text: '💡 Say: "Length 2000, Width 1000, Height 1500, Radius 100"'
+        };
+    },
 
-// Template variables:
-//
-// {{NAME}}
-// {{PROFILE}}
-// {{LENGTH}}
-// {{WIDTH}}
-// {{HEIGHT}}
-// {{RADIUS}}
-// {{POS_E}}
-// {{POS_N}}
-// {{POS_U}}
-// {{ORI}}
+    // Generic bot message
+    bot: function(text) {
+        return {
+            bot: true,
+            text: text
+        };
+    },
 
+    // Generic user message
+    user: function(text) {
+        return {
+            bot: false,
+            text: text
+        };
+    },
 
-// =========================================
-// Equipment Templates
-// =========================================
+    // Success message
+    success: function(text) {
+        return {
+            bot: true,
+            text: '✅ ' + text
+        };
+    },
 
+    // Error message
+    error: function(text) {
+        return {
+            bot: true,
+            text: '❌ ' + text
+        };
+    },
 
-const AVEVA_TEMPLATES = {
+    // Info message
+    info: function(text) {
+        return {
+            bot: true,
+            text: 'ℹ️ ' + text
+        };
+    },
 
+    // Warning message
+    warning: function(text) {
+        return {
+            bot: true,
+            text: '⚠️ ' + text
+        };
+    },
 
-    // -------------------------------------
-    // New Extrusion Equipment
-    // -------------------------------------
+    // Format dimension update
+    dimensionUpdate: function(dimensions) {
+        const parts = [];
+        if (dimensions.length) parts.push(`Length = ${dimensions.length}`);
+        if (dimensions.width) parts.push(`Width = ${dimensions.width}`);
+        if (dimensions.height) parts.push(`Height = ${dimensions.height}`);
+        if (dimensions.radius) parts.push(`Radius = ${dimensions.radius}`);
+        
+        return {
+            bot: true,
+            text: '✅ Updated: ' + parts.join(', ')
+        };
+    },
 
-    EXTRUSION:
+    // Format listening message
+    listening: function() {
+        return {
+            bot: true,
+            text: '🎙️ Listening...'
+        };
+    },
 
-
-`NEW EQUIPMENT /{{NAME}}
-
-
-NEW EXTRUSION /BODY
-
-
-PROFILE /{{PROFILE}}
-
-
-LENGTH {{LENGTH}}
-
-
-WIDTH {{WIDTH}}
-
-
-HEIGHT {{HEIGHT}}
-
-
-RADIUS {{RADIUS}}
-
-
-POS E {{POS_E}} N {{POS_N}} U {{POS_U}}
-
-
-ORI {{ORI}}`
-
-
+    // Format transcript
+    transcript: function(text) {
+        return {
+            bot: false,
+            text: '🗣️ "' + text + '"'
+        };
+    }
 };
 
-
-
-// =========================================
-// Get Template
-// =========================================
-
-
-function getTemplate(type){
-
-
-    if(AVEVA_TEMPLATES[type]){
-
-
-        return AVEVA_TEMPLATES[type];
-
-
-    }
-
-
-    console.error(
-
-        "Template not found:",
-
-        type
-
-    );
-
-
-    return "";
-
+// Global export
+if (typeof window !== 'undefined') {
+    window.Templates = Templates;
 }
