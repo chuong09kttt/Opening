@@ -1,24 +1,20 @@
-// File management utilities
-const FileManager = {
-    // Simulate folder selection
+var FileManager = {
     selectFolder: function() {
-        // Trong ứng dụng thực tế, sử dụng showDirectoryPicker hoặc tương tự
-        const fakePath = '/home/user/projects/aveva_output';
-        return fakePath;
+        return '/home/user/projects/aveva_output';
     },
 
-    // Save data to TXT file
-    saveToTXT: function(data, filename = 'equipment_config.txt') {
+    saveToTXT: function(data, filename) {
+        filename = filename || 'equipment_config.txt';
         try {
-            const content = this.formatData(data);
-            const blob = new Blob([content], { type: 'text/plain' });
-            const a = document.createElement('a');
+            var content = this.formatData(data);
+            var blob = new Blob([content], { type: 'text/plain' });
+            var a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
             a.download = filename;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
-            setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+            setTimeout(function() { URL.revokeObjectURL(a.href); }, 1000);
             return true;
         } catch (e) {
             console.error('Error saving file:', e);
@@ -26,31 +22,25 @@ const FileManager = {
         }
     },
 
-    // Format data for TXT export
     formatData: function(data) {
-        return `AVEVA Equipment Studio
-================================
-Equipment: ${data.name || 'N/A'}
-Profile: ${data.profile || 'N/A'}
---------------------------------
-Dimensions:
-  Length: ${data.length || 'N/A'}
-  Width: ${data.width || 'N/A'}
-  Height: ${data.height || 'N/A'}
-  Corner Radius: ${data.radius || 'N/A'}
---------------------------------
-Position:
-  E: ${data.posE || 'N/A'}
-  N: ${data.posN || 'N/A'}
-  U: ${data.posU || 'N/A'}
---------------------------------
-Orientation: ${data.orientation || 'N/A'}
-================================
-Generated: ${new Date().toLocaleString()}`;
+        return 'AVEVA Equipment Studio\n' +
+               '================================\n' +
+               'Equipment: ' + (data.name || 'N/A') + '\n' +
+               'Profile: ' + (data.profile || 'N/A') + '\n' +
+               '--------------------------------\n' +
+               'Dimensions:\n' +
+               '  Length: ' + (data.length || 'N/A') + '\n' +
+               '  Width: ' + (data.width || 'N/A') + '\n' +
+               '  Height: ' + (data.height || 'N/A') + '\n' +
+               '  Corner Radius: ' + (data.radius || 'N/A') + '\n' +
+               '--------------------------------\n' +
+               'Position:\n' +
+               '  E: ' + (data.posE || 'N/A') + '\n' +
+               '  N: ' + (data.posN || 'N/A') + '\n' +
+               '  U: ' + (data.posU || 'N/A') + '\n' +
+               '--------------------------------\n' +
+               'Orientation: ' + (data.orientation || 'N/A') + '\n' +
+               '================================\n' +
+               'Generated: ' + new Date().toLocaleString();
     }
 };
-
-// Global export
-if (typeof window !== 'undefined') {
-    window.FileManager = FileManager;
-}
