@@ -1,18 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
     <title>AVEVA Equipment Studio</title>
-
-    <link rel="stylesheet" href="style.css">
+    <!-- Font & Icon -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <!-- CSS riêng -->
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
     <header>
         <div class="logo">
@@ -25,29 +24,24 @@
         </div>
     </header>
 
-    <!-- MAIN - Full width, no right panel -->
     <div class="main">
         <div class="leftPanel">
-            <!-- Equipment Group -->
+            <!-- Equipment -->
             <div class="group">
-                <h2>
-                    <i class="fa-solid fa-box"></i>
-                    Equipment
-                </h2>
+                <h2><i class="fa-solid fa-box"></i> Equipment</h2>
                 <label>Equipment Name</label>
                 <input id="eqName" value="EQ001">
                 <label>Profile</label>
                 <select id="profile">
                     <option>ROUNDRECT</option>
+                    <option>RECTANGLE</option>
+                    <option>CIRCLE</option>
                 </select>
             </div>
 
-            <!-- Dimensions Group -->
+            <!-- Dimensions -->
             <div class="group">
-                <h2>
-                    <i class="fa-solid fa-ruler-combined"></i>
-                    Dimensions
-                </h2>
+                <h2><i class="fa-solid fa-ruler-combined"></i> Dimensions</h2>
                 <label>Length</label>
                 <input id="length" type="number" value="5000">
                 <label>Width</label>
@@ -58,34 +52,19 @@
                 <input id="radius" type="number" value="100">
             </div>
 
-            <!-- Position Group -->
+            <!-- Position -->
             <div class="group">
-                <h2>
-                    <i class="fa-solid fa-location-dot"></i>
-                    Position
-                </h2>
+                <h2><i class="fa-solid fa-location-dot"></i> Position</h2>
                 <div class="row">
-                    <div>
-                        <label>E</label>
-                        <input id="posE" type="number" value="1000">
-                    </div>
-                    <div>
-                        <label>N</label>
-                        <input id="posN" type="number" value="2000">
-                    </div>
-                    <div>
-                        <label>U</label>
-                        <input id="posU" type="number" value="500">
-                    </div>
+                    <div><label>E</label><input id="posE" type="number" value="1000"></div>
+                    <div><label>N</label><input id="posN" type="number" value="2000"></div>
+                    <div><label>U</label><input id="posU" type="number" value="500"></div>
                 </div>
             </div>
 
-            <!-- Orientation Group -->
+            <!-- Orientation -->
             <div class="group">
-                <h2>
-                    <i class="fa-solid fa-compass"></i>
-                    Orientation
-                </h2>
+                <h2><i class="fa-solid fa-compass"></i> Orientation</h2>
                 <select id="orientation">
                     <option value="Y IS N AND Z IS U">+Y</option>
                     <option value="Y IS S AND Z IS U">-Y</option>
@@ -96,68 +75,230 @@
                 </select>
             </div>
 
-            <!-- Voice Chat Group -->
+            <!-- Voice Chat -->
             <div class="group voice-chat-group">
-                <h2>
-                    <i class="fa-solid fa-microphone"></i>
-                    Voice Chat
-                </h2>
-                
+                <h2><i class="fa-solid fa-microphone"></i> Voice Chat</h2>
                 <div id="chatContainer" class="chat-container">
-                    <div class="chat-message bot">
-                        <i class="fa-solid fa-robot"></i>
-                        <span>👋 Hello! I'm your voice assistant for equipment dimensions.</span>
-                    </div>
-                    <div class="chat-message bot">
-                        <i class="fa-solid fa-robot"></i>
-                        <span>💡 Please speak your dimensions. I'll listen for Length, Width, Height, and Corner Radius.</span>
-                    </div>
-                    <div class="chat-message bot">
-                        <i class="fa-solid fa-robot"></i>
-                        <span>📝 Example: "Length 2000, Width 1000, Height 1500, Radius 100"</span>
-                    </div>
+                    <div class="chat-message bot"><i class="fa-solid fa-robot"></i><span>👋 Xin chào! Tôi là trợ lý giọng nói.</span></div>
+                    <div class="chat-message bot"><i class="fa-solid fa-robot"></i><span>💡 Hãy nói: "Length 2000, Width 1000, Height 1500, Radius 100"</span></div>
+                    <div class="chat-message bot"><i class="fa-solid fa-robot"></i><span>📝 Tôi sẽ cập nhật các trường tương ứng.</span></div>
                 </div>
-
                 <div class="voice-controls">
-                    <button id="voiceBtn" class="voice-btn">
-                        <i class="fa-solid fa-microphone"></i>
-                        Start Listening
-                    </button>
-                    <button id="clearChatBtn" class="clear-btn" title="Clear chat">
-                        <i class="fa-solid fa-trash"></i>
-                    </button>
+                    <button id="voiceBtn" class="voice-btn"><i class="fa-solid fa-microphone"></i> Bắt đầu nghe</button>
+                    <button id="clearChatBtn" class="clear-btn" title="Xóa chat"><i class="fa-solid fa-trash"></i></button>
                 </div>
-                <div id="voiceStatus" class="voice-status">Ready</div>
+                <div id="voiceStatus" class="voice-status">🔴 Sẵn sàng</div>
             </div>
 
             <!-- Output Folder -->
             <div class="group">
-                <h2>
-                    <i class="fa-solid fa-folder-open"></i>
-                    Output Folder
-                </h2>
-                <button id="selectFolder">Select Folder</button>
-                <div id="folderPath">No Folder Selected</div>
+                <h2><i class="fa-solid fa-folder-open"></i> Output Folder</h2>
+                <button id="selectFolder">Chọn thư mục</button>
+                <div id="folderPath">Chưa chọn thư mục</div>
             </div>
 
             <!-- Buttons -->
             <div class="group buttons">
-                <button id="generateBtn">Generate</button>
-                <button id="saveBtn">Save TXT</button>
+                <button id="generateBtn"><i class="fa-solid fa-play"></i> Generate</button>
+                <button id="saveBtn"><i class="fa-regular fa-file-lines"></i> Save TXT</button>
             </div>
         </div>
     </div>
 
-    <footer>
-        Ready | AVEVA Equipment Studio | Version 1.0
-    </footer>
+    <footer>Ready · AVEVA Equipment Studio · v1.0</footer>
 
-    <script src="config.js"></script>
-    <script src="templates.js"></script>
-    <script src="generator.js"></script>
-    <script src="fileManager.js"></script>
-    <script src="speech.js"></script>
-    <script src="script.js"></script>
+    <!-- JavaScript -->
+    <script>
+        (function() {
+            // DOM refs
+            const eqName = document.getElementById('eqName');
+            const profile = document.getElementById('profile');
+            const lengthInp = document.getElementById('length');
+            const widthInp = document.getElementById('width');
+            const heightInp = document.getElementById('height');
+            const radiusInp = document.getElementById('radius');
+            const posE = document.getElementById('posE');
+            const posN = document.getElementById('posN');
+            const posU = document.getElementById('posU');
+            const orientation = document.getElementById('orientation');
+            const folderPath = document.getElementById('folderPath');
+            const chatContainer = document.getElementById('chatContainer');
+            const voiceBtn = document.getElementById('voiceBtn');
+            const clearChatBtn = document.getElementById('clearChatBtn');
+            const voiceStatus = document.getElementById('voiceStatus');
+            const generateBtn = document.getElementById('generateBtn');
+            const saveBtn = document.getElementById('saveBtn');
+            const selectFolderBtn = document.getElementById('selectFolder');
+
+            // ----- Voice (Speech Recognition) -----
+            let recognition = null;
+            let isListening = false;
+
+            function appendChatMessage(text, isBot = true) {
+                const div = document.createElement('div');
+                div.className = 'chat-message ' + (isBot ? 'bot' : 'user');
+                const icon = document.createElement('i');
+                icon.className = isBot ? 'fa-solid fa-robot' : 'fa-solid fa-user';
+                const span = document.createElement('span');
+                span.textContent = text;
+                div.appendChild(icon);
+                div.appendChild(span);
+                chatContainer.appendChild(div);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+
+            function updateStatus(text, isListeningMode = false) {
+                voiceStatus.textContent = text;
+                if (isListeningMode) {
+                    voiceBtn.classList.add('listening');
+                    voiceBtn.innerHTML = '<i class="fa-solid fa-circle-stop"></i> Dừng nghe';
+                } else {
+                    voiceBtn.classList.remove('listening');
+                    voiceBtn.innerHTML = '<i class="fa-solid fa-microphone"></i> Bắt đầu nghe';
+                }
+            }
+
+            function parseDimensionsFromText(transcript) {
+                const lower = transcript.toLowerCase();
+                const lengthMatch = lower.match(/length\s*[:]?\s*(\d+)/i);
+                const widthMatch = lower.match(/width\s*[:]?\s*(\d+)/i);
+                const heightMatch = lower.match(/height\s*[:]?\s*(\d+)/i);
+                const radiusMatch = lower.match(/radius\s*[:]?\s*(\d+)/i);
+                if (lengthMatch) lengthInp.value = lengthMatch[1];
+                if (widthMatch) widthInp.value = widthMatch[1];
+                if (heightMatch) heightInp.value = heightMatch[1];
+                if (radiusMatch) radiusInp.value = radiusMatch[1];
+                const parts = [];
+                if (lengthMatch) parts.push(`Length = ${lengthMatch[1]}`);
+                if (widthMatch) parts.push(`Width = ${widthMatch[1]}`);
+                if (heightMatch) parts.push(`Height = ${heightMatch[1]}`);
+                if (radiusMatch) parts.push(`Radius = ${radiusMatch[1]}`);
+                if (parts.length === 0) {
+                    appendChatMessage('⚠️ Không tìm thấy kích thước nào. Hãy nói rõ: Length, Width, Height, Radius.');
+                } else {
+                    appendChatMessage('✅ Đã cập nhật: ' + parts.join(', '));
+                }
+            }
+
+            function initSpeech() {
+                if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+                    appendChatMessage('❌ Trình duyệt không hỗ trợ Voice Chat. Dùng Chrome/Edge.');
+                    voiceBtn.disabled = true;
+                    voiceBtn.style.opacity = '0.5';
+                    return;
+                }
+                const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+                recognition = new SR();
+                recognition.lang = 'vi-VN';
+                recognition.continuous = false;
+                recognition.interimResults = false;
+                recognition.maxAlternatives = 1;
+
+                recognition.onstart = function() {
+                    isListening = true;
+                    updateStatus('🎤 Đang lắng nghe ...', true);
+                    appendChatMessage('🎙️ Đang nghe ...');
+                };
+
+                recognition.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript;
+                    appendChatMessage('🗣️ "' + transcript + '"', false);
+                    parseDimensionsFromText(transcript);
+                };
+
+                recognition.onerror = function(event) {
+                    isListening = false;
+                    updateStatus('❌ Lỗi: ' + event.error);
+                    voiceBtn.classList.remove('listening');
+                    voiceBtn.innerHTML = '<i class="fa-solid fa-microphone"></i> Bắt đầu nghe';
+                    if (event.error === 'not-allowed') {
+                        appendChatMessage('⚠️ Quyền microphone bị từ chối.');
+                    } else {
+                        appendChatMessage('⚠️ Lỗi nhận dạng: ' + event.error);
+                    }
+                };
+
+                recognition.onend = function() {
+                    isListening = false;
+                    updateStatus('🔴 Sẵn sàng');
+                    voiceBtn.classList.remove('listening');
+                    voiceBtn.innerHTML = '<i class="fa-solid fa-microphone"></i> Bắt đầu nghe';
+                };
+            }
+
+            function toggleListening() {
+                if (!recognition) {
+                    initSpeech();
+                    if (!recognition) return;
+                }
+                if (isListening) {
+                    recognition.stop();
+                    isListening = false;
+                    updateStatus('🔴 Đã dừng');
+                    voiceBtn.classList.remove('listening');
+                    voiceBtn.innerHTML = '<i class="fa-solid fa-microphone"></i> Bắt đầu nghe';
+                } else {
+                    try {
+                        recognition.start();
+                    } catch (e) {
+                        if (e.message.includes('already started')) {
+                            recognition.stop();
+                            setTimeout(() => recognition.start(), 300);
+                        } else {
+                            appendChatMessage('❌ Không thể khởi động microphone.');
+                        }
+                    }
+                }
+            }
+
+            // ---- Gắn sự kiện ----
+            voiceBtn.addEventListener('click', toggleListening);
+            clearChatBtn.addEventListener('click', function() {
+                chatContainer.innerHTML = '';
+                appendChatMessage('🧹 Chat đã được làm sạch.');
+            });
+
+            selectFolderBtn.addEventListener('click', function() {
+                const fakePath = '/home/user/projects/aveva_output';
+                folderPath.textContent = fakePath;
+                appendChatMessage('📁 Đã chọn: ' + fakePath);
+            });
+
+            generateBtn.addEventListener('click', function() {
+                const data = {
+                    name: eqName.value,
+                    profile: profile.value,
+                    length: lengthInp.value,
+                    width: widthInp.value,
+                    height: heightInp.value,
+                    radius: radiusInp.value,
+                    posE: posE.value,
+                    posN: posN.value,
+                    posU: posU.value,
+                    orientation: orientation.value,
+                };
+                let msg = '📦 Generate: ';
+                msg += `L=${data.length}, W=${data.width}, H=${data.height}, R=${data.radius}`;
+                msg += ` | Pos(E,N,U)=(${data.posE},${data.posN},${data.posU})`;
+                appendChatMessage(msg);
+                console.log('Config data:', data);
+                alert('✅ Đã tạo cấu hình (xem Console)');
+            });
+
+            saveBtn.addEventListener('click', function() {
+                const content = `AVEVA Equipment Studio\nEquipment: ${eqName.value}\nProfile: ${profile.value}\nLength: ${lengthInp.value}\nWidth: ${widthInp.value}\nHeight: ${heightInp.value}\nRadius: ${radiusInp.value}\nPosition E: ${posE.value}\nPosition N: ${posN.value}\nPosition U: ${posU.value}\nOrientation: ${orientation.value}`;
+                const blob = new Blob([content], { type: 'text/plain' });
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = 'equipment_config.txt';
+                a.click();
+                URL.revokeObjectURL(a.href);
+                appendChatMessage('💾 Đã lưu file TXT');
+            });
+
+            initSpeech();
+            appendChatMessage('👋 Chào mừng! Sử dụng giọng nói hoặc nhập tay.');
+        })();
+    </script>
 </body>
-
 </html>
