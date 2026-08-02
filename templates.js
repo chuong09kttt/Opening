@@ -1,6 +1,4 @@
-// Template utilities for chat messages
-const Templates = {
-    // Welcome message
+var Templates = {
     welcome: function() {
         return {
             bot: true,
@@ -8,7 +6,6 @@ const Templates = {
         };
     },
 
-    // Help message
     help: function() {
         return {
             bot: true,
@@ -16,7 +13,6 @@ const Templates = {
         };
     },
 
-    // Generic bot message
     bot: function(text) {
         return {
             bot: true,
@@ -24,7 +20,6 @@ const Templates = {
         };
     },
 
-    // Generic user message
     user: function(text) {
         return {
             bot: false,
@@ -32,7 +27,6 @@ const Templates = {
         };
     },
 
-    // Success message
     success: function(text) {
         return {
             bot: true,
@@ -40,7 +34,6 @@ const Templates = {
         };
     },
 
-    // Error message
     error: function(text) {
         return {
             bot: true,
@@ -48,7 +41,6 @@ const Templates = {
         };
     },
 
-    // Info message
     info: function(text) {
         return {
             bot: true,
@@ -56,7 +48,6 @@ const Templates = {
         };
     },
 
-    // Warning message
     warning: function(text) {
         return {
             bot: true,
@@ -64,13 +55,12 @@ const Templates = {
         };
     },
 
-    // Format dimension update
     dimensionUpdate: function(dimensions) {
-        const parts = [];
-        if (dimensions.length) parts.push(`Length = ${dimensions.length}`);
-        if (dimensions.width) parts.push(`Width = ${dimensions.width}`);
-        if (dimensions.height) parts.push(`Height = ${dimensions.height}`);
-        if (dimensions.radius) parts.push(`Radius = ${dimensions.radius}`);
+        var parts = [];
+        if (dimensions.length) parts.push('Length = ' + dimensions.length);
+        if (dimensions.width) parts.push('Width = ' + dimensions.width);
+        if (dimensions.height) parts.push('Height = ' + dimensions.height);
+        if (dimensions.radius) parts.push('Radius = ' + dimensions.radius);
         
         return {
             bot: true,
@@ -78,7 +68,6 @@ const Templates = {
         };
     },
 
-    // Format listening message
     listening: function() {
         return {
             bot: true,
@@ -86,7 +75,6 @@ const Templates = {
         };
     },
 
-    // Format transcript
     transcript: function(text) {
         return {
             bot: false,
@@ -94,8 +82,3 @@ const Templates = {
         };
     }
 };
-
-// Global export
-if (typeof window !== 'undefined') {
-    window.Templates = Templates;
-}
