@@ -26,39 +26,36 @@
 
     <div class="main">
         <div class="leftPanel">
-            <!-- Equipment -->
-            <div class="group">
-                <h2><i class="fa-solid fa-box"></i> Equipment</h2>
-                <label>Equipment Name</label>
-                <input id="eqName" value="EQ001">
-                <label>Profile</label>
-                <select id="profile">
-                    <option>ROUNDRECT</option>
-                    <option>RECTANGLE</option>
-                    <option>CIRCLE</option>
-                </select>
-            </div>
-
-            <!-- Dimensions -->
-            <div class="group">
+            <!-- Dimensions - 1 hàng 4 cột -->
+            <div class="group dimensions-group">
                 <h2><i class="fa-solid fa-ruler-combined"></i> Dimensions</h2>
-                <label>Length</label>
-                <input id="length" type="number" value="5000">
-                <label>Width</label>
-                <input id="width" type="number" value="5000">
-                <label>Height</label>
-                <input id="height" type="number" value="1500">
-                <label>Corner Radius</label>
-                <input id="radius" type="number" value="150">
+                <div class="dimensions-row">
+                    <div class="dimension-item">
+                        <label>Length</label>
+                        <input id="length" type="number" value="5000">
+                    </div>
+                    <div class="dimension-item">
+                        <label>Width</label>
+                        <input id="width" type="number" value="5000">
+                    </div>
+                    <div class="dimension-item">
+                        <label>Height</label>
+                        <input id="height" type="number" value="1500">
+                    </div>
+                    <div class="dimension-item">
+                        <label>Radius</label>
+                        <input id="radius" type="number" value="100">
+                    </div>
+                </div>
             </div>
 
             <!-- Position -->
             <div class="group">
                 <h2><i class="fa-solid fa-location-dot"></i> Position</h2>
                 <div class="row">
-                    <div><label>E</label><input id="posE" type="number" value="0"></div>
-                    <div><label>N</label><input id="posN" type="number" value="0"></div>
-                    <div><label>U</label><input id="posU" type="number" value="0"></div>
+                    <div><label>E</label><input id="posE" type="number" value="1000"></div>
+                    <div><label>N</label><input id="posN" type="number" value="2000"></div>
+                    <div><label>U</label><input id="posU" type="number" value="500"></div>
                 </div>
             </div>
 
@@ -80,7 +77,7 @@
                 <h2><i class="fa-solid fa-microphone"></i> Voice Chat</h2>
                 <div id="chatContainer" class="chat-container">
                     <div class="chat-message bot"><i class="fa-solid fa-robot"></i><span>👋 Hello! I'm your voice assistant.</span></div>
-                    <div class="chat-message bot"><i class="fa-solid fa-robot"></i><span>💡 Say: "Length 2000, Width 1000, Height 1500, Radius 150"</span></div>
+                    <div class="chat-message bot"><i class="fa-solid fa-robot"></i><span>💡 Say: "Length 2000, Width 1000, Height 1500, Radius 100"</span></div>
                     <div class="chat-message bot"><i class="fa-solid fa-robot"></i><span>📝 I'll update the fields automatically.</span></div>
                 </div>
                 <div class="voice-controls">
@@ -90,17 +87,11 @@
                 <div id="voiceStatus" class="voice-status">🔴 Ready</div>
             </div>
 
-            <!-- Output Folder -->
-            <div class="group folder-group">
-                <h2><i class="fa-solid fa-folder-open"></i> Output Folder</h2>
-                <button id="selectFolder">Select Folder</button>
-                <div id="folderPath">No Folder Selected</div>
-            </div>
-
-            <!-- Buttons -->
-            <div class="group buttons-group">
-                <button id="generateBtn"><i class="fa-solid fa-play"></i> Generate</button>
-                <button id="saveBtn"><i class="fa-regular fa-file-lines"></i> Save TXT</button>
+            <!-- Export Button -->
+            <div class="group export-group">
+                <button id="exportBtn" class="export-btn">
+                    <i class="fa-solid fa-download"></i> Export TXT
+                </button>
             </div>
         </div>
     </div>
@@ -108,12 +99,8 @@
     <footer>Ready · AVEVA Equipment Studio · v1.0</footer>
 </div>
 
-<!-- Tất cả JS cùng thư mục -->
 <script src="config.js"></script>
 <script src="speech.js"></script>
-<script src="fileManager.js"></script>
-<script src="generator.js"></script>
-<script src="templates.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
