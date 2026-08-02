@@ -1,861 +1,201 @@
-// =========================================
-// AVEVA Equipment Studio
-// Main Application Controller
-// =========================================
+// Main application script
+(function() {
+    'use strict';
 
+    // Get DOM elements
+    const getEl = (id) => document.getElementById(id);
+    
+    const eqName = getEl('eqName');
+    const profile = getEl('profile');
+    const lengthInp = getEl('length');
+    const widthInp = getEl('width');
+    const heightInp = getEl('height');
+    const radiusInp = getEl('radius');
+    const posE = getEl('posE');
+    const posN = getEl('posN');
+    const posU = getEl('posU');
+    const orientation = getEl('orientation');
+    const folderPath = getEl('folderPath');
+    const chatContainer = getEl('chatContainer');
+    const voiceBtn = getEl('voiceBtn');
+    const clearChatBtn = getEl('clearChatBtn');
+    const voiceStatus = getEl('voiceStatus');
+    const generateBtn = getEl('generateBtn');
+    const saveBtn = getEl('saveBtn');
+    const selectFolderBtn = getEl('selectFolder');
 
-
-// =========================================
-// Application Start
-// =========================================
-
-
-window.addEventListener(
-    "DOMContentLoaded",
-    function(){
-
-
-        console.log(
-            "AVEVA Equipment Studio Started"
-        );
-
-
-
-        loadUserSettings();
-
-
-        initSpeech();
-
-
-        bindEvents();
-
-
-        generateTXT();
-
-
+    // Chat functions
+    function appendChatMessage(text, isBot = true) {
+        const div = document.createElement('div');
+        div.className = 'chat-message ' + (isBot ? 'bot' : 'user');
+        const icon = document.createElement('i');
+        icon.className = isBot ? 'fa-solid fa-robot' : 'fa-solid fa-user';
+        const span = document.createElement('span');
+        span.textContent = text;
+        div.appendChild(icon);
+        div.appendChild(span);
+        chatContainer.appendChild(div);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
     }
-);
 
-
-
-
-
-// =========================================
-// Bind Button Events
-// =========================================
-
-
-function bindEvents(){
-
-
-
-    // Generate Button
-
-    document
-    .getElementById(
-        "generateBtn"
-    )
-    .addEventListener(
-
-        "click",
-
-        function(){
-
-
-            generateTXT();
-
-
+    function updateVoiceStatus(text, isListeningMode = false) {
+        voiceStatus.textContent = text;
+        if (isListeningMode) {
+            voiceBtn.classList.add('listening');
+            voiceBtn.innerHTML = '<i class="fa-solid fa-circle-stop"></i> Stop Listening';
+        } else {
+            voiceBtn.classList.remove('listening');
+            voiceBtn.innerHTML = '<i class="fa-solid fa-microphone"></i> Start Listening';
         }
+    }
 
-    );
-
-
-
-
-
-
-    // Save Button
-
-    document
-    .getElementById(
-        "saveBtn"
-    )
-    .addEventListener(
-
-        "click",
-
-        async function(){
-
-
-            let text =
-            getCurrentTXT();
-
-
-
-            await saveTXTFile(
-                text
-            );
-
-
+    // Parse dimensions from speech
+    function parseDimensionsFromText(transcript) {
+        const lower = transcript.toLowerCase();
+        
+        // English patterns
+        const engLength = lower.match(/\b(length)\s*[:]?\s*(\d+)/i);
+        const engWidth = lower.match(/\b(width)\s*[:]?\s*(\d+)/i);
+        const engHeight = lower.match(/\b(height)\s*[:]?\s*(\d+)/i);
+        const engRadius = lower.match(/\b(radius)\s*[:]?\s*(\d+)/i);
+        
+        // Vietnamese patterns
+        const vnLength = lower.match(/\b(chiều dài|chieu dai|dài)\s*[:]?\s*(\d+)/i);
+        const vnWidth = lower.match(/\b(chiều rộng|chieu rong|rộng|ngang)\s*[:]?\s*(\d+)/i);
+        const vnHeight = lower.match(/\b(chiều cao|chieu cao|cao)\s*[:]?\s*(\d+)/i);
+        const vnRadius = lower.match(/\b(bán kính|ban kinh|radius)\s*[:]?\s*(\d+)/i);
+        
+        // Use whichever matches first
+        const lengthMatch = engLength || vnLength;
+        const widthMatch = engWidth || vnWidth;
+        const heightMatch = engHeight || vnHeight;
+        const radiusMatch = engRadius || vnRadius;
+        
+        const updated = {};
+        if (lengthMatch) {
+            lengthInp.value = lengthMatch[2];
+            updated.length = lengthMatch[2];
         }
-
-    );
-
-
-
-
-
-
-    // Select Folder
-
-    document
-    .getElementById(
-        "selectFolder"
-    )
-    .addEventListener(
-
-        "click",
-
-        async function(){
-
-
-            await selectOutputFolder();
-
-
+        if (widthMatch) {
+            widthInp.value = widthMatch[2];
+            updated.width = widthMatch[2];
         }
-
-    );
-
-
-
-
-
-
-    // Voice Button
-
-    document
-    .getElementById(
-        "voiceBtn"
-    )
-    .addEventListener(
-
-        "click",
-
-        function(){
-
-
-            toggleVoice();
-
-
+        if (heightMatch) {
+            heightInp.value = heightMatch[2];
+            updated.height = heightMatch[2];
         }
-
-    );
-
-
-
-
-
-
-    // Auto Preview
-
-    let inputs =
-
-    document.querySelectorAll(
-
-        "input, select"
-
-    );
-
-
-
-    inputs.forEach(
-
-        element => {
-
-/* =========================================
-   AVEVA Equipment Studio
-   Professional Light Theme - Full Width
-   ========================================= */
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
-    background: #f0f2f5;
-    color: #1a2332;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-}
-
-            element.addEventListener(
-/* =========================================
-   HEADER
-   ========================================= */
-
-header {
-    background: #ffffff;
-    padding: 14px 32px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #e0e4e8;
-    flex-shrink: 0;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-    height: 60px;
-}
-
-                "input",
-.logo {
-    font-size: 18px;
-    font-weight: 600;
-    color: #0a2b4e;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-                function(){
-.logo i {
-    font-size: 22px;
-    color: #0066b3;
-}
-
-.status {
-    font-size: 14px;
-    color: #4a5a6e;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-                    generateTXT();
-.green-dot {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    background: #22c55e;
-    border-radius: 50%;
-    box-shadow: 0 0 6px rgba(34, 197, 94, 0.4);
-    animation: pulse-dot 2s infinite;
-}
-
-@keyframes pulse-dot {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
-}
-
-                }
-/* =========================================
-   MAIN - Full Width
-   ========================================= */
-
-            );
-.main {
-    flex: 1;
-    padding: 20px;
-    overflow: hidden;
-    background: #f0f2f5;
-    display: flex;
-}
-
-/* =========================================
-   LEFT PANEL - Full Width Grid
-   ========================================= */
-
-.leftPanel {
-    width: 100%;
-    height: 100%;
-    background: #ffffff;
-    border-radius: 12px;
-    padding: 24px 28px;
-    overflow-y: auto;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px 30px;
-    align-content: start;
-}
-
-/* =========================================
-   GROUPS
-   ========================================= */
-
-            element.addEventListener(
-.group {
-    background: #f8fafc;
-    border-radius: 10px;
-    padding: 16px 18px 18px;
-    border: 1px solid #e8ecf0;
-    transition: border-color 0.2s;
-}
-
-                "change",
-.group:hover {
-    border-color: #d0d7de;
-}
-
-                function(){
-.group h2 {
-    font-size: 14px;
-    font-weight: 600;
-    color: #1a3a5c;
-    margin-bottom: 14px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.group h2 i {
-    color: #0066b3;
-    font-size: 16px;
-    width: 20px;
-}
-
-                    generateTXT();
-.group label {
-    font-size: 12px;
-    font-weight: 500;
-    color: #4a5a6e;
-    display: block;
-    margin-top: 10px;
-    margin-bottom: 4px;
-}
-
-.group label:first-of-type {
-    margin-top: 0;
-}
-
-                }
-.group input,
-.group select {
-    width: 100%;
-    padding: 8px 12px;
-    border: 1.5px solid #dce1e8;
-    border-radius: 6px;
-    font-size: 13px;
-    font-weight: 500;
-    background: white;
-    color: #1a2332;
-    transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-            );
-.group input:focus,
-.group select:focus {
-    outline: none;
-    border-color: #0066b3;
-    box-shadow: 0 0 0 3px rgba(0, 102, 179, 0.12);
-}
-
-.group input[type="number"] {
-    -moz-appearance: textfield;
-}
-
+        if (radiusMatch) {
+            radiusInp.value = radiusMatch[2];
+            updated.radius = radiusMatch[2];
         }
-.group input[type="number"]::-webkit-outer-spin-button,
-.group input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-}
-
-    );
-.group .row {
-    display: flex;
-    gap: 12px;
-}
-
-.group .row > div {
-    flex: 1;
-}
-
-.group .row label {
-    font-size: 12px;
-    font-weight: 600;
-    color: #2a4a6e;
-    margin-bottom: 2px;
-}
-
-.group .row input {
-    padding: 8px 10px;
-}
-
-/* =========================================
-   BUTTONS IN GROUPS
-   ========================================= */
-
-.group button {
-    width: 100%;
-    padding: 10px;
-    background: #0066b3;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 13px;
-    font-weight: 500;
-    transition: all 0.2s;
-}
-
-.group button:hover {
-    background: #005299;
-    transform: translateY(-1px);
-}
-
-.group button:active {
-    transform: scale(0.98);
-}
-
-/* Output Folder */
-#folderPath {
-    margin-top: 10px;
-    padding: 10px;
-    background: #f0f2f5;
-    border-radius: 5px;
-    color: #4a5a6e;
-    font-size: 12px;
-    word-break: break-all;
-}
-
-/* =========================================
-   VOICE CHAT GROUP
-   ========================================= */
-
-.voice-chat-group {
-    grid-column: 1 / -1;
-    min-height: 280px;
-    display: flex;
-    flex-direction: column;
-}
-
-// =========================================
-// Load Previous Settings
-// =========================================
-.chat-container {
-    flex: 1;
-    min-height: 180px;
-    max-height: 280px;
-    overflow-y: auto;
-    background: #ffffff;
-    border-radius: 8px;
-    padding: 12px;
-    margin: 6px 0 10px;
-    border: 1.5px solid #e0e4e8;
-    scroll-behavior: smooth;
-}
-
-.chat-container::-webkit-scrollbar {
-    width: 5px;
-}
-
-function loadUserSettings(){
-.chat-container::-webkit-scrollbar-track {
-    background: #f0f2f5;
-    border-radius: 10px;
-}
-
-.chat-container::-webkit-scrollbar-thumb {
-    background: #c0c8d0;
-    border-radius: 10px;
-}
-
-.chat-message {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    padding: 8px 12px;
-    margin-bottom: 8px;
-    border-radius: 8px;
-    animation: slideIn 0.3s ease;
-    font-size: 13px;
-    line-height: 1.5;
-}
-
-    let data =
-.chat-message.bot {
-    background: #e8f0fe;
-    color: #0d3a6e;
-}
-
-    loadSettings();
-.chat-message.user {
-    background: #e6f7e6;
-    color: #1a5e1a;
-}
-
-.chat-message.interim {
-    opacity: 0.7;
-    background: #f3e8ff;
-    color: #4a2a7a;
-}
-
-.chat-message i {
-    font-size: 15px;
-    margin-top: 2px;
-    min-width: 20px;
-}
-
-.chat-message span {
-    flex: 1;
-    word-break: break-word;
-    white-space: pre-wrap;
-}
-
-    if(!data){
-.typing-indicator {
-    display: inline-block;
-    animation: dots 1.4s infinite;
-    font-weight: bold;
-}
-
-        return;
-@keyframes dots {
-    0%, 20% { content: ''; }
-    40% { content: '.'; }
-    60% { content: '..'; }
-    80%, 100% { content: '...'; }
-}
-
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateY(-8px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-
-
-
-
-    setValue(
-        "eqName",
-        data.NAME
-    );
-
-
-
-    setValue(
-        "length",
-        data.LENGTH
-    );
-
-
-
-    setValue(
-        "width",
-        data.WIDTH
-    );
-
-
-
-    setValue(
-        "height",
-        data.HEIGHT
-    );
-
-
-
-    setValue(
-        "radius",
-        data.RADIUS
-    );
-
-
-
-    setValue(
-        "posE",
-        data.POS_E
-    );
-
-
-
-    setValue(
-        "posN",
-        data.POS_N
-    );
-
-
-
-    setValue(
-        "posU",
-        data.POS_U
-    );
-
-
-
-    setValue(
-        "orientation",
-        data.ORI
-    );
-
-
-}
-
-.voice-controls {
-    display: flex;
-    gap: 10px;
-    margin: 4px 0 6px;
-}
-
-.voice-btn {
-    flex: 1;
-    padding: 10px 16px;
-    background: #0066b3;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 500;
-    font-size: 14px;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-}
-
-.voice-btn:hover {
-    background: #005299;
-    transform: scale(1.01);
-}
-
-.voice-btn.listening {
-    background: #dc3545;
-    animation: pulse 1.5s infinite;
-}
-
-// =========================================
-// Safe Set Value
-// =========================================
-@keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.7; }
-}
-
-.voice-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    transform: none;
-}
-
-function setValue(id,value){
-.clear-btn {
-    padding: 10px 16px;
-    background: #6c7a8a;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.2s;
-    font-size: 14px;
-}
-
-.clear-btn:hover {
-    background: #5a6a7a;
-}
-
-.voice-status {
-    font-size: 13px;
-    color: #5a6a7e;
-    text-align: center;
-    padding: 4px 0;
-    font-style: italic;
-    min-height: 24px;
-}
-
-    let element =
-/* =========================================
-   BUTTONS GROUP (Generate & Save)
-   ========================================= */
-
-.group.buttons {
-    grid-column: 1 / -1;
-    display: flex;
-    gap: 14px;
-    background: transparent;
-    border: none;
-    padding: 8px 0 0;
-}
-
-    document.getElementById(id);
-.group.buttons button {
-    flex: 1;
-    padding: 12px;
-    font-weight: 600;
-    font-size: 14px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s;
-    height: 44px;
-}
-
-#generateBtn {
-    background: #0066b3;
-    color: white;
-}
-
-#generateBtn:hover {
-    background: #005299;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 102, 179, 0.3);
-}
-
-    if(element &&
-       value !== undefined){
-#saveBtn {
-    background: #1a3a5c;
-    color: white;
-}
-
-#saveBtn:hover {
-    background: #0f2a44;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(26, 58, 92, 0.3);
-}
-
-        element.value=value;
-/* =========================================
-   FOOTER
-   ========================================= */
-
-footer {
-    background: #ffffff;
-    padding: 10px 32px;
-    border-top: 1px solid #e0e4e8;
-    font-size: 12px;
-    color: #6a7a8e;
-    flex-shrink: 0;
-    text-align: center;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* =========================================
-   RESPONSIVE
-   ========================================= */
-
-@media (max-width: 1024px) {
-    .leftPanel {
-        grid-template-columns: 1fr 1fr;
-        gap: 16px;
-        padding: 20px;
-    }
-
-
-}
-
-
-
-
-
-// =========================================
-// Keyboard Shortcut
-// =========================================
-
-
-document.addEventListener(
-
-    "keydown",
-
-    function(e){
-
-
-
-        // CTRL + S
-
-        if(
-
-            e.ctrlKey &&
-            e.key==="s"
-
-        ){
-
-
-            e.preventDefault();
-
-
-            saveTXTFile(
-                getCurrentTXT()
-            );
-
-
+        
+        const parts = [];
+        if (updated.length) parts.push(`Length = ${updated.length}`);
+        if (updated.width) parts.push(`Width = ${updated.width}`);
+        if (updated.height) parts.push(`Height = ${updated.height}`);
+        if (updated.radius) parts.push(`Radius = ${updated.radius}`);
+        
+        if (parts.length === 0) {
+            appendChatMessage('⚠️ No dimensions found. Please say: Length, Width, Height, Radius.');
+        } else {
+            appendChatMessage('✅ Updated: ' + parts.join(', '));
         }
+    }
 
+    // Initialize Speech Manager
+    const speechManager = new SpeechManager();
+    
+    if (!speechManager.isSupported()) {
+        appendChatMessage('❌ Browser doesn\'t support Voice Chat. Use Chrome/Edge.');
+        voiceBtn.disabled = true;
+        voiceBtn.style.opacity = '0.5';
+    }
 
-
-        // F5 Generate
-
-        if(
-            e.key==="F5"
-        ){
-
-
-            e.preventDefault();
-
-
-            generateTXT();
-
-
+    // Set speech callbacks
+    speechManager.setCallbacks(
+        (transcript) => {
+            appendChatMessage('🗣️ "' + transcript + '"', false);
+            parseDimensionsFromText(transcript);
+        },
+        (text, isListening) => {
+            updateVoiceStatus(text, isListening);
         }
+    );
 
+    // Voice button
+    voiceBtn.addEventListener('click', function() {
+        if (!speechManager.isSupported()) {
+            return;
+        }
+        speechManager.startListening();
+    });
 
+    // Clear chat
+    clearChatBtn.addEventListener('click', function() {
+        chatContainer.innerHTML = '';
+        appendChatMessage('🧹 Chat cleared.');
+    });
 
-@media (max-width: 768px) {
-    .main {
-        padding: 12px;
-    }
-    
-    .leftPanel {
-        grid-template-columns: 1fr;
-        padding: 16px;
-        gap: 14px;
-    }
-    
-    .voice-chat-group {
-        min-height: 240px;
-    }
-    
-    .chat-container {
-        max-height: 200px;
-        min-height: 120px;
-    }
-    
-    header {
-        padding: 10px 16px;
-        height: 50px;
-    }
-    
-    .logo {
-        font-size: 15px;
-    }
-    
-    .group.buttons {
-        flex-direction: column;
-    }
-}
+    // Select folder
+    selectFolderBtn.addEventListener('click', function() {
+        const path = FileManager.selectFolder();
+        folderPath.textContent = path;
+        appendChatMessage('📁 Selected folder: ' + path);
+    });
 
-);
-@media (max-width: 480px) {
-    .group .row {
-        flex-direction: column;
-        gap: 8px;
-    }
+    // Generate
+    generateBtn.addEventListener('click', function() {
+        const data = {
+            name: eqName.value,
+            profile: profile.value,
+            length: lengthInp.value,
+            width: widthInp.value,
+            height: heightInp.value,
+            radius: radiusInp.value,
+            posE: posE.value,
+            posN: posN.value,
+            posU: posU.value,
+            orientation: orientation.value,
+        };
+        
+        const result = Generator.generate(data);
+        
+        if (result.success) {
+            const summary = Generator.getSummary(result);
+            appendChatMessage('📦 ' + summary);
+            console.log('Config data:', result.data);
+            alert('✅ Configuration generated successfully!');
+        } else {
+            const errors = result.errors.join('\n');
+            appendChatMessage('❌ Generation failed:\n' + errors);
+            alert('❌ Errors:\n' + errors);
+        }
+    });
+
+    // Save TXT
+    saveBtn.addEventListener('click', function() {
+        const data = {
+            name: eqName.value,
+            profile: profile.value,
+            length: lengthInp.value,
+            width: widthInp.value,
+            height: heightInp.value,
+            radius: radiusInp.value,
+            posE: posE.value,
+            posN: posN.value,
+            posU: posU.value,
+            orientation: orientation.value,
+        };
+        
+        FileManager.saveToTXT(data);
+        appendChatMessage('💾 TXT file saved.');
+    });
+
+    // Welcome message using Templates
+    const welcomeMsg = Templates.welcome();
+    appendChatMessage(welcomeMsg.text, welcomeMsg.bot);
     
-    .voice-controls {
-        flex-direction: column;
-    }
-    
-    .clear-btn {
-        width: 100%;
-    }
-}
+    const helpMsg = Templates.help();
+    appendChatMessage(helpMsg.text, helpMsg.bot);
+
+})();
