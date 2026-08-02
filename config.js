@@ -1,202 +1,43 @@
-// =========================================
-// AVEVA Equipment Studio
-// Configuration File
-// =========================================
-
-
-const APP_CONFIG = {
-
-
-    // Application Information
-
-    APP_NAME: "AVEVA Equipment Studio",
-
-    VERSION: "1.0.0",
-
-
-    // Default Equipment
-
-    DEFAULT_EQUIPMENT:
-
-    {
-
-        NAME: "EQ001",
-
-        PROFILE: "ROUNDRECT",
-
-        LENGTH: 2000,
-
-        WIDTH: 1000,
-
-        HEIGHT: 1500,
-
-        RADIUS: 100,
-
-
-        POSITION:
-
-        {
-
-            E: 1000,
-
-            N: 2000,
-
-            U: 500
-
-        },
-
-
-        ORIENTATION:
-
-        "Y IS N AND Z IS U"
-
+// Configuration and DOM references
+const CONFIG = {
+    // DOM element IDs
+    elements: {
+        eqName: 'eqName',
+        profile: 'profile',
+        length: 'length',
+        width: 'width',
+        height: 'height',
+        radius: 'radius',
+        posE: 'posE',
+        posN: 'posN',
+        posU: 'posU',
+        orientation: 'orientation',
+        folderPath: 'folderPath',
+        chatContainer: 'chatContainer',
+        voiceBtn: 'voiceBtn',
+        clearChatBtn: 'clearChatBtn',
+        voiceStatus: 'voiceStatus',
+        generateBtn: 'generateBtn',
+        saveBtn: 'saveBtn',
+        selectFolder: 'selectFolder'
     },
-
-
-
-    // Output File
-
-    DEFAULT_FILENAME:
-
-    "Equipment.txt",
-
-
-
-    // Voice Configuration
-
-    VOICE:
-
-    {
-
-        LANGUAGE:
-
-        "vi-VN",
-
-
-        // Speech recognition
-
-        CONTINUOUS:
-
-        false,
-
-
-        INTERIM_RESULTS:
-
-        true
-
-    },
-
-
-
-    // File System Access
-
-    FILE_SYSTEM:
-
-    {
-
-        ENABLED:
-
-        true,
-
-
-        SAVE_FOLDER_KEY:
-
-        "AVEVA_OUTPUT_FOLDER"
-
-    },
-
-
-
-    // Local Storage
-
-    STORAGE:
-
-    {
-
-        SETTINGS_KEY:
-
-        "AVEVA_EQUIPMENT_SETTINGS",
-
-
-        LAST_FILE_KEY:
-
-        "AVEVA_LAST_FILE"
-
+    
+    // Default values
+    defaults: {
+        eqName: 'EQ001',
+        length: 5000,
+        width: 5000,
+        height: 1500,
+        radius: 100,
+        posE: 1000,
+        posN: 2000,
+        posU: 500,
+        profile: 'ROUNDRECT',
+        orientation: 'Y IS N AND Z IS U'
     }
-
-
-
 };
 
-
-
-
-// =========================================
-// Load Saved Settings
-// =========================================
-
-function loadSettings(){
-
-
-    let data =
-
-    localStorage.getItem(
-
-        APP_CONFIG.STORAGE.SETTINGS_KEY
-
-    );
-
-
-    if(data){
-
-
-        try{
-
-
-            return JSON.parse(data);
-
-
-        }
-
-        catch(e){
-
-
-            console.error(
-
-                "Settings load error",
-
-                e
-
-            );
-
-
-        }
-
-
-    }
-
-
-    return APP_CONFIG.DEFAULT_EQUIPMENT;
-
-
-}
-
-
-
-// =========================================
-// Save Settings
-// =========================================
-
-function saveSettings(data){
-
-
-    localStorage.setItem(
-
-        APP_CONFIG.STORAGE.SETTINGS_KEY,
-
-        JSON.stringify(data)
-
-    );
-
-
+// Export for use in other files
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = CONFIG;
 }
