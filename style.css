@@ -156,6 +156,33 @@ header {
     -webkit-appearance: none;
 }
 
+/* Dimensions - 1 hàng 4 cột */
+.dimensions-group {
+    grid-column: 1 / -1;
+}
+
+.dimensions-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 10px;
+}
+
+.dimension-item label {
+    font-size: 10px;
+    font-weight: 600;
+    color: #2a4a6e;
+    margin-bottom: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-align: center;
+}
+
+.dimension-item input {
+    text-align: center;
+    padding: 8px 6px;
+}
+
+/* Position */
 .group .row {
     display: flex;
     gap: 10px;
@@ -178,6 +205,7 @@ header {
     text-align: center;
 }
 
+/* Voice Chat */
 .voice-chat-group {
     grid-column: 1 / -1;
     display: flex;
@@ -324,80 +352,43 @@ header {
     min-height: 20px;
 }
 
-.folder-group {
+/* Export Button */
+.export-group {
     grid-column: 1 / -1;
+    padding: 8px 16px 16px;
+    background: #f8fafc;
+    border: none;
 }
 
-#selectFolder {
+.export-btn {
     width: 100%;
-    padding: 8px;
-    background: #0066b3;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 13px;
-    font-weight: 500;
-    transition: all 0.2s;
-}
-
-#selectFolder:hover {
-    background: #005299;
-    transform: translateY(-1px);
-}
-
-#folderPath {
-    margin-top: 8px;
-    padding: 8px 12px;
-    background: #f0f2f5;
-    border-radius: 6px;
-    color: #4a5a6e;
-    font-size: 12px;
-    word-break: break-all;
-    border: 1px dashed #d0d7de;
-}
-
-.buttons-group {
-    grid-column: 1 / -1;
-    display: flex;
-    gap: 12px;
-    background: transparent;
-    border: none;
-    padding: 4px 0 0;
-}
-
-.buttons-group button {
-    flex: 1;
-    padding: 10px;
-    font-weight: 600;
-    font-size: 13px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s;
-    height: 40px;
-}
-
-#generateBtn {
-    background: #0066b3;
-    color: white;
-}
-
-#generateBtn:hover {
-    background: #005299;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 102, 179, 0.3);
-}
-
-#saveBtn {
+    padding: 14px;
     background: #1a3a5c;
     color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 16px;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }
 
-#saveBtn:hover {
+.export-btn:hover {
     background: #0f2a44;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(26, 58, 92, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(26, 58, 92, 0.3);
+}
+
+.export-btn:active {
+    transform: scale(0.98);
+}
+
+.export-btn i {
+    font-size: 18px;
 }
 
 footer {
@@ -410,6 +401,7 @@ footer {
     text-align: center;
 }
 
+/* Responsive */
 @media (max-width: 768px) {
     body {
         padding: 10px;
@@ -420,17 +412,21 @@ footer {
         gap: 12px;
     }
     
+    .dimensions-group {
+        grid-column: 1;
+    }
+    
+    .dimensions-row {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+    
     .voice-chat-group {
         grid-column: 1;
     }
     
-    .folder-group {
+    .export-group {
         grid-column: 1;
-    }
-    
-    .buttons-group {
-        grid-column: 1;
-        flex-direction: column;
     }
     
     .main {
@@ -449,9 +445,24 @@ footer {
         max-height: 160px;
         min-height: 100px;
     }
+    
+    .export-btn {
+        font-size: 14px;
+        padding: 12px;
+    }
 }
 
 @media (max-width: 480px) {
+    .dimensions-row {
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+    }
+    
+    .dimension-item input {
+        padding: 6px 4px;
+        font-size: 12px;
+    }
+    
     .group .row {
         flex-direction: column;
         gap: 6px;
