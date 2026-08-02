@@ -3,11 +3,11 @@ const Generator = {
     // Generate configuration
     generate: function(data) {
         // Validate data
-        const validated = this.validate(data);
-        if (!validated.valid) {
+        const validation = this.validate(data);
+        if (!validation.valid) {
             return {
                 success: false,
-                errors: validated.errors,
+                errors: validation.errors,
                 data: null
             };
         }
@@ -15,21 +15,21 @@ const Generator = {
         // Generate config object
         const config = {
             equipment: {
-                name: data.name,
-                profile: data.profile
+                name: data.name || 'EQ001',
+                profile: data.profile || 'ROUNDRECT'
             },
             dimensions: {
-                length: parseFloat(data.length),
-                width: parseFloat(data.width),
-                height: parseFloat(data.height),
-                radius: parseFloat(data.radius)
+                length: parseFloat(data.length) || 0,
+                width: parseFloat(data.width) || 0,
+                height: parseFloat(data.height) || 0,
+                radius: parseFloat(data.radius) || 0
             },
             position: {
-                e: parseFloat(data.posE),
-                n: parseFloat(data.posN),
-                u: parseFloat(data.posU)
+                e: parseFloat(data.posE) || 0,
+                n: parseFloat(data.posN) || 0,
+                u: parseFloat(data.posU) || 0
             },
-            orientation: data.orientation,
+            orientation: data.orientation || 'Y IS N AND Z IS U',
             timestamp: new Date().toISOString()
         };
 
@@ -45,8 +45,12 @@ const Generator = {
         const errors = [];
         
         // Check required fields
-        if (!data.name) errors.push('Equipment name is required');
-        if (!data.profile) errors.push('Profile is required');
+        if (!data.name || data.name.trim() === '') {
+            errors.push('Equipment name is required');
+        }
+        if (!data.profile || data.profile.trim() === '') {
+            errors.push('Profile is required');
+        }
         
         // Validate numbers
         const numFields = ['length', 'width', 'height', 'radius', 'posE', 'posN', 'posU'];
@@ -65,7 +69,9 @@ const Generator = {
 
     // Get config summary
     getSummary: function(config) {
-        if (!config || !config.success) return 'Invalid configuration';
+        if (!config || !config.success || !config.data) {
+            return 'Invalid configuration';
+        }
         const d = config.data;
         return `Equipment: ${d.equipment.name} | ` +
                `Dimensions: ${d.dimensions.length}x${d.dimensions.width}x${d.dimensions.height} | ` +
