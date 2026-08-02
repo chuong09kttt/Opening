@@ -1,9 +1,6 @@
-// Generator utilities
-const Generator = {
-    // Generate configuration
+var Generator = {
     generate: function(data) {
-        // Validate data
-        const validation = this.validate(data);
+        var validation = this.validate(data);
         if (!validation.valid) {
             return {
                 success: false,
@@ -12,8 +9,7 @@ const Generator = {
             };
         }
 
-        // Generate config object
-        const config = {
+        var config = {
             equipment: {
                 name: data.name || 'EQ001',
                 profile: data.profile || 'ROUNDRECT'
@@ -40,11 +36,9 @@ const Generator = {
         };
     },
 
-    // Validate input data
     validate: function(data) {
-        const errors = [];
+        var errors = [];
         
-        // Check required fields
         if (!data.name || data.name.trim() === '') {
             errors.push('Equipment name is required');
         }
@@ -52,14 +46,14 @@ const Generator = {
             errors.push('Profile is required');
         }
         
-        // Validate numbers
-        const numFields = ['length', 'width', 'height', 'radius', 'posE', 'posN', 'posU'];
-        numFields.forEach(field => {
-            const val = parseFloat(data[field]);
+        var numFields = ['length', 'width', 'height', 'radius', 'posE', 'posN', 'posU'];
+        for (var i = 0; i < numFields.length; i++) {
+            var field = numFields[i];
+            var val = parseFloat(data[field]);
             if (isNaN(val) || val < 0) {
-                errors.push(`${field} must be a positive number`);
+                errors.push(field + ' must be a positive number');
             }
-        });
+        }
 
         return {
             valid: errors.length === 0,
@@ -67,19 +61,13 @@ const Generator = {
         };
     },
 
-    // Get config summary
     getSummary: function(config) {
         if (!config || !config.success || !config.data) {
             return 'Invalid configuration';
         }
-        const d = config.data;
-        return `Equipment: ${d.equipment.name} | ` +
-               `Dimensions: ${d.dimensions.length}x${d.dimensions.width}x${d.dimensions.height} | ` +
-               `Position: (${d.position.e}, ${d.position.n}, ${d.position.u})`;
+        var d = config.data;
+        return 'Equipment: ' + d.equipment.name + ' | ' +
+               'Dimensions: ' + d.dimensions.length + 'x' + d.dimensions.width + 'x' + d.dimensions.height + ' | ' +
+               'Position: (' + d.position.e + ', ' + d.position.n + ', ' + d.position.u + ')';
     }
 };
-
-// Global export
-if (typeof window !== 'undefined') {
-    window.Generator = Generator;
-}
