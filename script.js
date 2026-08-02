@@ -143,10 +143,15 @@
         });
     }
 
-    // Export Button - Save TXT file
+    // ============================================
+    // EXPORT BUTTON - Lưu file TXT
+    // ============================================
     if (exportBtn) {
+        console.log('✅ Export button found!'); // Debug
         exportBtn.addEventListener('click', function() {
+            console.log('🔄 Export button clicked!'); // Debug
             try {
+                // Lấy dữ liệu từ các input
                 var data = {
                     length: lengthInp ? lengthInp.value : '5000',
                     width: widthInp ? widthInp.value : '5000',
@@ -158,6 +163,9 @@
                     orientation: orientation ? orientation.value : 'Y IS N AND Z IS U'
                 };
                 
+                console.log('📊 Data to export:', data); // Debug
+                
+                // Tạo nội dung file
                 var content = 'AVEVA Equipment Studio\n';
                 content += '================================\n';
                 content += 'Dimensions:\n';
@@ -175,22 +183,31 @@
                 content += '================================\n';
                 content += 'Generated: ' + new Date().toLocaleString();
                 
+                // Tạo và tải file
                 var blob = new Blob([content], { type: 'text/plain' });
-                var a = document.createElement('a');
-                a.href = URL.createObjectURL(blob);
-                a.download = 'equipment_config.txt';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                setTimeout(function() { URL.revokeObjectURL(a.href); }, 1000);
+                var link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = 'equipment_config.txt';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                // Giải phóng URL sau khi tải
+                setTimeout(function() {
+                    URL.revokeObjectURL(link.href);
+                }, 1000);
                 
                 appendChatMessage('💾 TXT file exported successfully!');
+                console.log('✅ File exported successfully!'); // Debug
+                
             } catch (e) {
-                console.error('Error exporting file:', e);
-                appendChatMessage('❌ Error exporting file.');
+                console.error('❌ Error exporting file:', e);
+                appendChatMessage('❌ Error exporting file: ' + e.message);
                 alert('❌ Error: ' + e.message);
             }
         });
+    } else {
+        console.error('❌ Export button not found!');
     }
 
     // Welcome messages
