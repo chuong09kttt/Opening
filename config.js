@@ -4,9 +4,9 @@ var CONFIG = {
         width: 'width',
         height: 'height',
         radius: 'radius',
-        posE: 'posE',
-        posN: 'posN',
-        posU: 'posU',
+        posX: 'posX',
+        posY: 'posY',
+        posZ: 'posZ',
         orientation: 'orientation',
         chatContainer: 'chatContainer',
         voiceBtn: 'voiceBtn',
@@ -16,13 +16,13 @@ var CONFIG = {
     },
     
     defaults: {
-        length: 5000,
+        length: 7000,
         width: 5000,
-        height: 1500,
+        height: 10000,
         radius: 100,
-        posE: 1000,
-        posN: 2000,
-        posU: 500,
+        posX: 1000,
+        posY: 2000,
+        posZ: 500,
         orientation: 'Y IS N AND Z IS U'
     }
 };
