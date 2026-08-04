@@ -20,6 +20,7 @@
     var exportBtn = getEl('exportBtn');
 
     var hasGreeted = false;
+    var isProcessing = false; // CHỈNH SỬA: Ngăn xử lý trùng lặp
 
     function appendChatMessage(text, isBot) {
         isBot = (isBot !== undefined) ? isBot : true;
@@ -130,13 +131,29 @@
     }
 
     function handleSpeechResult(transcript) {
+        // CHỈNH SỬA: Ngăn xử lý trùng lặp
+        if (isProcessing) {
+            console.log('Đang xử lý, bỏ qua kết quả này');
+            return;
+        }
+        
+        isProcessing = true;
         appendChatMessage('🗣️ "' + transcript + '"', false);
+        
         var hasData = parseDimensionsFromText(transcript);
         
         if (hasData) {
             var responseText = 'File model 3D đã được tạo, hãy click vào nút Export để lưu file';
             appendChatMessage('🤖 ' + responseText, true);
-            speakVietnamese(responseText);
+            
+            // CHỈNH SỬA: Đợi 1.5 giây trước khi nói để tránh xung đột
+            setTimeout(function() {
+                speakVietnamese(responseText, function() {
+                    isProcessing = false;
+                });
+            }, 1500);
+        } else {
+            isProcessing = false;
         }
     }
 
@@ -177,12 +194,22 @@
                 return;
             }
             
+            // CHỈNH SỬA: Nếu đang xử lý, không làm gì cả
+            if (isProcessing) {
+                appendChatMessage('⏳ Đang xử lý, vui lòng đợi...');
+                return;
+            }
+            
             if (!hasGreeted) {
                 hasGreeted = true;
                 var greetingText = 'HELLO, TÔI LÀ TRỢ LÝ ẢO, BẠN HÃY NÓI RÕ KÍCH THƯỚC VÀ VỊ TRÍ CỦA LỖ MỞ NHÉ';
                 appendChatMessage('🤖 ' + greetingText, true);
+                
+                // CHỈNH SỬA: Đợi 2 giây để nói xong rồi mới bắt đầu nghe
                 speakVietnamese(greetingText, function() {
-                    speechManager.startListening();
+                    setTimeout(function() {
+                        speechManager.startListening();
+                    }, 500);
                 });
             } else {
                 speechManager.startListening();
@@ -195,6 +222,7 @@
         clearChatBtn.addEventListener('click', function() {
             chatContainer.innerHTML = '';
             hasGreeted = false;
+            isProcessing = false;
             appendChatMessage('🧹 Chat đã được xóa.');
         });
     }
@@ -245,10 +273,13 @@
                     URL.revokeObjectURL(link.href);
                 }, 1000);
                 
-                // Nói thông báo khi export thành công
                 var exportMsg = 'File đã được xuất thành công';
                 appendChatMessage('💾 ' + exportMsg, true);
-                speakVietnamese(exportMsg);
+                
+                // CHỈNH SỬA: Đợi 1 giây rồi mới nói
+                setTimeout(function() {
+                    speakVietnamese(exportMsg);
+                }, 1000);
                 
             } catch (e) {
                 console.error('❌ Error exporting file:', e);
