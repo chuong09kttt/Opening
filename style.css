@@ -84,6 +84,39 @@ header {
     gap: 14px;
 }
 
+/* ============================================
+   MAIN TITLE - CREATE OPENING MODEL
+   ============================================ */
+.main-title-group {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, #0a2b4e 0%, #1a4a7a 100%);
+    border: none;
+    padding: 20px 24px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.main-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.main-title i {
+    font-size: 32px;
+    color: #7fc9ff;
+}
+
+/* ============================================
+   GROUPS
+   ============================================ */
 .group {
     background: #ffffff;
     border-radius: 10px;
@@ -412,6 +445,19 @@ footer {
         gap: 12px;
     }
     
+    .main-title-group {
+        grid-column: 1;
+    }
+    
+    .main-title {
+        font-size: 22px;
+        gap: 10px;
+    }
+    
+    .main-title i {
+        font-size: 26px;
+    }
+    
     .dimensions-group {
         grid-column: 1;
     }
@@ -453,6 +499,16 @@ footer {
 }
 
 @media (max-width: 480px) {
+    .main-title {
+        font-size: 18px;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+    
+    .main-title i {
+        font-size: 22px;
+    }
+    
     .dimensions-row {
         grid-template-columns: 1fr 1fr;
         gap: 6px;
