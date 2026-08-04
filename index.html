@@ -16,7 +16,7 @@
     <header>
         <div class="logo">
             <i class="fa-solid fa-cube"></i>
-            AVEVA Equipment Studio
+            CREAT OPENING
         </div>
         <div class="status">
             <span class="green-dot"></span>
@@ -50,25 +50,23 @@
             </div>
 
             <!-- Position -->
+            <!-- Position -->
             <div class="group">
                 <h2><i class="fa-solid fa-location-dot"></i> Position</h2>
                 <div class="row">
-                    <div><label>E</label><input id="posE" type="number" value="1000"></div>
-                    <div><label>N</label><input id="posN" type="number" value="2000"></div>
-                    <div><label>U</label><input id="posU" type="number" value="500"></div>
+                    <div><label>X</label><input id="posX" type="number" value="0"></div>
+                    <div><label>Y</label><input id="posY" type="number" value="0"></div>
+                    <div><label>Z</label><input id="posZ" type="number" value="0"></div>
                 </div>
             </div>
-
+            
             <!-- Orientation -->
             <div class="group">
                 <h2><i class="fa-solid fa-compass"></i> Orientation</h2>
                 <select id="orientation">
-                    <option value="Y IS N AND Z IS U">+Y</option>
-                    <option value="Y IS S AND Z IS U">-Y</option>
-                    <option value="X IS E AND Z IS U">+X</option>
-                    <option value="X IS W AND Z IS U">-X</option>
-                    <option value="Z IS U AND Y IS N">+Z</option>
-                    <option value="Z IS D AND Y IS N">-Z</option>
+                    <option value="Y IS N AND Z IS U">X</option>
+                    <option value="X IS E AND Z IS U">Y</option>
+                    <option value="Z IS U AND Y IS N">Z</option>
                 </select>
             </div>
 
@@ -90,7 +88,7 @@
             <!-- Export Button -->
             <div class="group export-group">
                 <button id="exportBtn" class="export-btn">
-                    <i class="fa-solid fa-download"></i> Export TXT
+                    <i class="fa-solid fa-download"></i> Export
                 </button>
             </div>
         </div>
